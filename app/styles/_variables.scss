@@ -1,0 +1,33 @@
+/*------------------------------------*\
+    #VARIABLES
+\*------------------------------------*/
+// Background colors
+$backgroundColor: #fff;
+$backgroundColor__grey: #f4f5f7;
+$backgroundColor__ligthgrey: #f9f9f9;
+
+// Colors
+$basicGreen: #51dd9f;
+
+// Action and navigation bars
+$actionBarHeight__mobile: 51px;
+$actionBarHeight__large: 70px;
+$navigationBarHeight__mobile: 49px;
+$paddingTop__mobile: $actionBarHeight__mobile + $navigationBarHeight__mobile;
+$paddingTop__large: $actionBarHeight__large;
+
+// Profile
+$profileImageSize__mobile: 120px;
+$profileImageSize__large: 120px;
+
+// Chat
+$messageHeaderHeight__mobile: 64px;
+$chatPaddingTop__mobile: $messageHeaderHeight__mobile;
+$chatNewMessageHeight__mobile: 50px;
+
+$messageText_paddind__mobile: 15px 16px 17px 17px;
+$messageText_fontSize__mobile: .9rem;
+$messageText_width__mobile: 80%;
+
+$messageText_r_color: #46cea3;/* 4dcade */
+$messageText_l_color: #efefef;

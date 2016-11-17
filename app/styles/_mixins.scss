@@ -1,0 +1,48 @@
+/*------------------------------------*\
+    #MIXINS
+\*------------------------------------*/
+@mixin transition-one($transition1) {
+    -webkit-transition: $transition1;
+       -moz-transition: $transition1;
+         -o-transition: $transition1;
+        -ms-transition: $transition1;
+            transition: $transition1;
+}
+@mixin transition-two($transition1, $transition2) {
+    -webkit-transition: $transition1, $transition2;
+       -moz-transition: $transition1, $transition2;
+         -o-transition: $transition1, $transition2;
+        -ms-transition: $transition1, $transition2;
+            transition: $transition1, $transition2;
+}
+@mixin transition-three($transition1, $transition2, $transition3) {
+    -webkit-transition: $transition1, $transition2, $transition3;
+       -moz-transition: $transition1, $transition2, $transition3;
+         -o-transition: $transition1, $transition2, $transition3;
+        -ms-transition: $transition1, $transition2, $transition3;
+            transition: $transition1, $transition2, $transition3;
+}
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+@mixin box-shadow($shadows) {
+  -webkit-box-shadow: $shadows;
+     -moz-box-shadow: $shadows;
+          box-shadow: $shadows;
+}
+@mixin user-select() {
+   -webkit-user-select:none;
+    -khtml-user-select:none;
+      -moz-user-select:-moz-none;
+       -ms-user-select:none;
+           user-select:none;
+}
+@mixin background-size($sizes) {
+  -webkit-background-size: $sizes;
+     -moz-background-size: $sizes;
+       -o-background-size: $sizes;
+          background-size: $sizes;
+}
