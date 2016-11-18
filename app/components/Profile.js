@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { Loading } from './shared/Loadings';
 import BookSVG from './shared/BookSVG';
 
-const BookRow = ({ id, title, author, link, available }) => {
+const BookRow = ({ id, title, author, link, available, onClickEvent }) => {
     let buttonView;
     if (available == 0) {
         buttonView = <button type="button" className="button disabled">Indisponível</button>;
@@ -13,18 +13,23 @@ const BookRow = ({ id, title, author, link, available }) => {
     }
 	return (
         <div className="profile-books">
-            <BookSVG />
-            <div className="title">{title}</div>
-            <div className="author">{author}</div>
-            <div className="link">{link}</div>
-            <div className="buttons">
-                {buttonView}
+            <button id={`book_details_${id}`} className="details" data-book={id} onClick={onClickEvent}>
+                <BookSVG />
+                <i className="fa fa-chevron-down" aria-hidden="true"></i>
+                <i className="fa fa-chevron-up" aria-hidden="true"></i>
+                <div className="title">{title}</div>
+                <div className="author">{author}</div>
+                <div className="link">{link}</div>
+            </button>
+            <div id={`book_getform_${id}`} className="get-form">
+                <textarea className="books-line-msg-textarea" rows="4" defaultValue={`Olá, gostaria de pegar emprestado o livro ${title}, de ${author}.`}></textarea>
+                <button type="button" className="button gradient-1">Enviar mensagem</button>
+                <button type="button" className="button hollow cancel" data-book={id} onClick={onClickEvent}>Cancelar</button>
+                <div className="bottom-space"></div>
             </div>
         </div>
 	)
 }
-
-
 
 class Profile extends Component {
     constructor(props) {
@@ -32,6 +37,20 @@ class Profile extends Component {
         this._renderLoading = this._renderLoading.bind(this);
         this._renderError = this._renderError.bind(this);
         this._renderProfile = this._renderProfile.bind(this);
+        this._openBookDetails = this._openBookDetails.bind(this);
+    }
+
+    _openBookDetails(e) {
+        const bookToView = e.currentTarget.getAttribute('data-book');
+        const bookDetails_element = document.getElementById(`book_details_${bookToView}`);
+        const book_GetForm_element = document.getElementById(`book_getform_${bookToView}`);
+        if (book_GetForm_element.getAttribute('class') == 'get-form -open') {
+            bookDetails_element.setAttribute('class', 'details');
+            book_GetForm_element.setAttribute('class', 'get-form');
+        } else {
+            bookDetails_element.setAttribute('class', 'details -open');
+            book_GetForm_element.setAttribute('class', 'get-form -open');
+        }
     }
 
     _renderLoading() {
@@ -48,7 +67,6 @@ class Profile extends Component {
         }
 
         const { address, name, letters, color, picture, followers, following, books } = this.props.profiles.data[0];
-        console.log(this.props.profiles.data[0])
 
         return (
         	<div className="profile-wrapper-inside">
@@ -70,7 +88,7 @@ class Profile extends Component {
 
 				<div className="row smaller">
 					<div className="small-12 columns">
-						<div className="profile-books-title">Books</div>
+						<div className="profile-books-title">Books ({books.length})</div>
 
                         {books.map((book) => {
                             return (
@@ -80,13 +98,19 @@ class Profile extends Component {
 									title={book.title}
 	                                author={book.author}
                                     link={book.link}
-                                    available={book.available} />
+                                    available={book.available}
+                                    onClickEvent={this._openBookDetails} />
                             )
                         })}
 
 					</div>
 				</div>
 
+                <div className="row">
+                    <div className="small-12 columns">
+                        <p><br /></p>
+                    </div>
+                </div>
         	</div>
         );
     }

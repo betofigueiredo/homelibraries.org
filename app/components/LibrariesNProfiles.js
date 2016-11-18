@@ -38,7 +38,8 @@ class LibrariesNProfiles extends Component {
 				name: '',
 				url: '',
 				number_of_books: 0
-			}
+			},
+			zoom: 13
 		};
     }
 
@@ -103,14 +104,17 @@ class LibrariesNProfiles extends Component {
 				}
 	    	});
 		});
-		this.circle.addListener('mousedown', (event) => {
-			this.changeSearchClickHold = window.setTimeout(() => {
-				this._reSetMapClick(event.latLng.lat(), event.latLng.lng());
-			}, 2300);
+		this.circle.addListener('dblclick', (event) => {
+			this._reSetMapClick(event.latLng.lat(), event.latLng.lng());
 		});
-		this.circle.addListener('mouseup', (event) => {
-			window.clearTimeout(this.changeSearchClickHold);
-		});
+		// this.circle.addListener('mousedown', (event) => {
+		// 	this.changeSearchClickHold = window.setTimeout(() => {
+		// 		this._reSetMapClick(event.latLng.lat(), event.latLng.lng());
+		// 	}, 2300);
+		// });
+		// this.circle.addListener('mouseup', (event) => {
+		// 	window.clearTimeout(this.changeSearchClickHold);
+		// });
     }
 
     _setMapListeners() {
@@ -128,14 +132,20 @@ class LibrariesNProfiles extends Component {
 				}
 	    	});
 		});
-		this.map.addListener('mousedown', (event) => {
-			this.changeSearchClickHold = window.setTimeout(() => {
-				this._reSetMapClick(event.latLng.lat(), event.latLng.lng());
-			}, 2300);
+		this.map.addListener('zoom_changed', () => {
+			this.setState({ zoom: this.map.getZoom() });
 		});
-		this.map.addListener('mouseup', () => {
-			window.clearTimeout(this.changeSearchClickHold);
+		this.map.addListener('dblclick', (event) => {
+			this._reSetMapClick(event.latLng.lat(), event.latLng.lng());
 		});
+		// this.map.addListener('mousedown', (event) => {
+		// 	this.changeSearchClickHold = window.setTimeout(() => {
+		// 		this._reSetMapClick(event.latLng.lat(), event.latLng.lng());
+		// 	}, 2300);
+		// });
+		// this.map.addListener('mouseup', () => {
+		// 	window.clearTimeout(this.changeSearchClickHold);
+		// });
     }
 
     _backToMyLocation() {
@@ -154,7 +164,8 @@ class LibrariesNProfiles extends Component {
     _setMap() {
 		this.map = new google.maps.Map(this.refs.librariesMap, {
 			center: {lat: -23.991506, lng: -46.258046},
-			zoom: 13
+			disableDoubleClickZoom: true,
+			zoom: this.state.zoom
 		});
 		this.map.setOptions({styles: light_and_clean});
 
@@ -321,6 +332,10 @@ class LibrariesNProfiles extends Component {
 		const page = this.props.routes[1].path;
 		const username = this.props.location.pathname;
 		this._setPage(page, username);
+		// window resize
+		window.onresize = function(event) {
+		    document.getElementById('librariesMap').style.height = window.innerHeight;
+		};
     }
 
 	componentDidUpdate() {
@@ -373,7 +388,7 @@ class LibrariesNProfiles extends Component {
 				</div>
 				<button className="my-location-button" onClick={this._backToMyLocation}><i className="fa fa-location-arrow" aria-hidden="true"></i></button>
 				<Link to="/search/"><button className="search-button"><i className="fa fa-search" aria-hidden="true"></i></button></Link>
-				<div ref="librariesMap" className="libraries-map"></div>
+				<div ref="librariesMap" id="librariesMap" className="libraries-map"></div>
 			</div>
 		);
 	}

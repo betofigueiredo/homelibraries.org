@@ -1182,6 +1182,12 @@ select {
       .button.hollow.header:hover, .button.hollow.header:focus {
         border-color: #111111;
         color: #111111; }
+    .button.hollow.cancel {
+      border: 1px solid transparent;
+      color: #c7c7c7;
+      margin-top: 0; }
+      .button.hollow.cancel:hover {
+        color: #222; }
   .button.disabled, .button[disabled] {
     opacity: 0.25;
     outline: none;

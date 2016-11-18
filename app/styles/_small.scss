@@ -329,55 +329,96 @@
   position: relative;
   display: block;
   width: 100%;
-  padding: 15px 0 20px 46px;
+  padding: 0;
   overflow: auto;
   border-bottom: 1px solid #eee;
 
-  > svg {
-    position: absolute;
-    top: 12px;
-    left: 5px; }
-
-  > .title {
+  > .details {
     position: relative;
     display: block;
     width: 100%;
-    text-align: left;
-    font-family: 'Roboto', sans-serif;
-    font-size: 18px;
-    line-height: 23px;
-    font-weight: 500;
-    color: #525252; }
+    padding: 15px 0 20px 46px;
+    overflow: auto;
+    outline: none;
 
-  > .author {
+    > .fa.fa-chevron-down {
+      display: block;
+      position: absolute;
+      top: 18px;
+      right: 10px;
+      color: #ccc; }
+    > .fa.fa-chevron-up {
+      display: none; }
+
+    &.-open {
+      > .fa.fa-chevron-down {
+        display: none; }
+      > .fa.fa-chevron-up {
+        display: block;
+        position: absolute;
+        top: 18px;
+        right: 10px;
+        color: #ccc; }
+    }
+
+    > svg {
+      position: absolute;
+      top: 12px;
+      left: 5px; }
+
+    > .title {
+      position: relative;
+      display: block;
+      width: 100%;
+      text-align: left;
+      font-family: 'Roboto', sans-serif;
+      font-size: 18px;
+      line-height: 23px;
+      font-weight: 500;
+      color: #525252; }
+
+    > .author {
+      position: relative;
+      display: block;
+      width: 100%;
+      text-align: left;
+      font-size: .9rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #afafaf; }
+
+    > .link {
+      position: relative;
+      display: block;
+      width: 100%;
+      text-align: left;
+      font-size: .9rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #212121; }
+  }
+
+  > .get-form {
     position: relative;
     display: block;
     width: 100%;
-    text-align: left;
-    font-size: .9rem;
-    white-space: nowrap;
+    padding: 0 0 0 0;
+    max-height: 0;
     overflow: hidden;
-    text-overflow: ellipsis;
-    color: #afafaf; }
+    @include transition-one(max-height 0.25s ease-in);
 
-  > .link {
-    position: relative;
-    display: block;
-    width: 100%;
-    text-align: left;
-    font-size: .9rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: #212121; }
+    &.-open {
+      max-height: 350px;
+      overflow: auto; }
 
-  > .buttons {
-    position: relative;
-    display: block;
-    width: 100%;
-    text-align: left;
-    font-size: .9rem;
-    margin-top: 16px; }
+    > .bottom-space {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 30px; }
+  }
 }
 
 
