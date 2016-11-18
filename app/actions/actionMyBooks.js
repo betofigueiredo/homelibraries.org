@@ -11,7 +11,7 @@ import { FETCH_MYBOOKS_REQUEST, FETCH_MYBOOKS_SUCCESS, FETCH_MYBOOKS_FAILURE } f
 export const getMyBooks = () => {
     return dispatch => {
         dispatch({ type: FETCH_MYBOOKS_REQUEST });
-        axios.get('https://www.homelibraries.org/requests/mybooks/')
+        axios.get('https://www.homelibraries.org/requests/mybooks')
         // axios.get('/requests/mybooks.json')
             .then((response) => {
                 dispatch({
@@ -39,7 +39,7 @@ import { ADD_NEWBOOK_REQUEST, ADD_NEWBOOK_SUCCESS, ADD_NEWBOOK_FAILURE } from '.
 export const addNewBook = (title, author, link) => {
     return dispatch => {
         dispatch({ type: ADD_NEWBOOK_REQUEST });
-        axios.post('https://www.homelibraries.org/add/book/', qs.stringify(
+        axios.post('https://www.homelibraries.org/add/book', qs.stringify(
                 { title, author, link }
             ))
             .then(function (response) {
@@ -84,7 +84,7 @@ import { DELETE_BOOK_REQUEST, DELETE_BOOK_SUCCESS, DELETE_BOOK_FAILURE } from '.
 export const deleteBook = (id, i) => {
     return dispatch => {
         // dispatch({ type: DELETE_BOOK_REQUEST });
-        axios.get(`https://www.homelibraries.org/delete/book/${id}/`)
+        axios.get(`https://www.homelibraries.org/delete/book/${id}`)
             .then((response) => {
                 dispatch({
                     type: DELETE_BOOK_SUCCESS,
@@ -107,7 +107,7 @@ import { UNDO_DELETE_BOOK_REQUEST, UNDO_DELETE_BOOK_SUCCESS, UNDO_DELETE_BOOK_FA
 export const undoDeleteBook = (id, i) => {
     return dispatch => {
         // dispatch({ type: UNDO_DELETE_BOOK_REQUEST });
-        axios.get(`https://www.homelibraries.org/undo/book/${id}/`)
+        axios.get(`https://www.homelibraries.org/undo/book/${id}`)
             .then((response) => {
                 dispatch({
                     type: UNDO_DELETE_BOOK_SUCCESS,
@@ -130,7 +130,7 @@ import { TOOGLE_AVAILABLE_BOOK_REQUEST, TOOGLE_AVAILABLE_BOOK_SUCCESS, TOOGLE_AV
 export const toogleAvailableBook = (id, i, available) => {
     return dispatch => {
         // dispatch({ type: TOOGLE_AVAILABLE_BOOK_REQUEST });
-        axios.get(`https://www.homelibraries.org/toogle/book/${id}/${available}/`)
+        axios.get(`https://www.homelibraries.org/toogle/book/${id}/${available}`)
             .then((response) => {
                 dispatch({
                     type: TOOGLE_AVAILABLE_BOOK_SUCCESS,
@@ -155,7 +155,7 @@ import { EDIT_BOOK_REQUEST, EDIT_BOOK_SUCCESS, EDIT_BOOK_FAILURE } from './actio
 export const editBook = (id, i, title, author, link) => {
     return dispatch => {
         dispatch({ type: EDIT_BOOK_REQUEST });
-        axios.post('https://www.homelibraries.org/edit/book/', qs.stringify(
+        axios.post('https://www.homelibraries.org/edit/book', qs.stringify(
                 { id, title, author, link }
             ))
             .then((response) => {

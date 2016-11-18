@@ -37,7 +37,7 @@ class Chat extends Component {
     	return (
 			<div className="chat-wrapper">
 			    <div className="chat-header">
-			    	<Link to="/messages/"><i className="fa fa-angle-left" aria-hidden="true"></i></Link>
+			    	<Link to="/messages"><i className="fa fa-angle-left" aria-hidden="true"></i></Link>
 			        <div className="chat-header-name"></div>
 			    </div>
     			<Loading />
@@ -76,7 +76,7 @@ class Chat extends Component {
         return (
 			<div className="chat-wrapper">
 			    <div className="chat-header">
-			    	<Link to="/messages/"><i className="fa fa-angle-left" aria-hidden="true"></i></Link>
+			    	<Link to="/messages"><i className="fa fa-angle-left" aria-hidden="true"></i></Link>
 			        <div className="chat-header-name">{this.props.chat.name}</div>
 			        <div className="chat-header-profile-pic" style={{backgroundColor: '#9b9fd0'}}>IP</div>
 			    </div>

@@ -22,7 +22,7 @@ class Search extends Component {
         const sLibrary = this.refs.search_library.value;
         const sLfl = false;
 		this.props.searchLibraries(sAdrress, sRadius, sBookAuthor, sLibrary, sLfl);
-		browserHistory.push('/libraries/');
+		browserHistory.push('/libraries');
     }
 
     _goBack() {

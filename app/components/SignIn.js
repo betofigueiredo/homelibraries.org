@@ -50,7 +50,7 @@ class SignIn extends Component {
 	        case 5:
 			    switch(error) {
 			        case 0:
-			        	origin == '' ? browserHistory.push('/libraries/') : browserHistory.push(`/${origin.substring(2)}/`);
+			        	origin == '' ? browserHistory.push('/libraries') : browserHistory.push(`/${origin.substring(2)}/`);
 			        	break;
 			        case 1:
 			        	// blank_fields
@@ -158,7 +158,7 @@ class SignIn extends Component {
 				<div className="row signin">
 					<div className="small-12 columns">
 						<div className="create-account-button">
-							<Link to="/sign/up/">Create an account</Link>
+							<Link to="/sign/up">Create an account</Link>
 						</div>
 					</div>
 				</div>

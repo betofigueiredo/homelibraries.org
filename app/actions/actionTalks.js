@@ -10,7 +10,7 @@ import { FETCH_TALKS_REQUEST, FETCH_TALKS_SUCCESS, FETCH_TALKS_FAILURE } from '.
 export const getTalks = () => {
     return dispatch => {
         dispatch({ type: FETCH_TALKS_REQUEST });
-        axios.get('https://www.homelibraries.org/requests/talks/')
+        axios.get('https://www.homelibraries.org/requests/talks')
             .then((response) => {
                 dispatch({
                     type: FETCH_TALKS_SUCCESS,

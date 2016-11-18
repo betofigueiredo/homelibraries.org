@@ -5,7 +5,7 @@ class BackBar extends Component {
 	render () {
 		return (
 		    <div className="back-action-bar">
-		    	<Link to="/account/" className="back-button"><i className="fa fa-angle-left" aria-hidden="true"></i></Link>
+		    	<Link to="/account" className="back-button"><i className="fa fa-angle-left" aria-hidden="true"></i></Link>
 		    	<div className="logo"><Link to="/">{this.props.header}</Link></div>
 		    </div>
 		);

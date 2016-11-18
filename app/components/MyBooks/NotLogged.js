@@ -11,7 +11,7 @@ const MyBooksIcon = () => {
 };
 
 const NotLogged = ({ origin, locale }) => {
-	const originUrl = origin != '' ? `/sign/in/o=${origin}` : '/sign/in/';
+	const originUrl = origin != '' ? `/sign/in/o=${origin}` : '/sign/in';
     return (
         <div className="not-logged-mybooks">
         	<div className="icon">

@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { translate } from '../../languages/translate';
 
 const NotLogged = ({ origin, locale }) => {
-	const originUrl = origin != '' ? `/sign/in/o=${origin}` : '/sign/in/';
+	const originUrl = origin != '' ? `/sign/in/o=${origin}` : '/sign/in';
     return (
         <div className="not-logged-wrapper">
         	<div>{translate[locale].notLogged}</div>

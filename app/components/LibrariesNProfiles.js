@@ -387,7 +387,7 @@ class LibrariesNProfiles extends Component {
 					</div>
 				</div>
 				<button className="my-location-button" onClick={this._backToMyLocation}><i className="fa fa-location-arrow" aria-hidden="true"></i></button>
-				<Link to="/search/"><button className="search-button"><i className="fa fa-search" aria-hidden="true"></i></button></Link>
+				<Link to="/search"><button className="search-button"><i className="fa fa-search" aria-hidden="true"></i></button></Link>
 				<div ref="librariesMap" id="librariesMap" className="libraries-map"></div>
 			</div>
 		);

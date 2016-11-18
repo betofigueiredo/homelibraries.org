@@ -10,7 +10,7 @@ import { FETCH_LIBRARIES_REQUEST, FETCH_LIBRARIES_SUCCESS, FETCH_LIBRARIES_FAILU
 export const getLibraries = (lat, lng, radius, bookauthor, libraries, lfl) => {
     return dispatch => {
         dispatch({ type: FETCH_LIBRARIES_REQUEST });
-        axios.get('https://www.homelibraries.org/requests/libraries/', {
+        axios.get('https://www.homelibraries.org/requests/libraries', {
                 params: {
                     lat: lat,
                     lng: lng,

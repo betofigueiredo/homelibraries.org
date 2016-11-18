@@ -11,7 +11,7 @@ import { SIGNIN_EMAIL_REQUEST, SIGNIN_EMAIL_SUCCESS, SIGNIN_EMAIL_FAILURE } from
 export const signInSendEmail = (email) => {
     return dispatch => {
         dispatch({ type: SIGNIN_EMAIL_REQUEST });
-        axios.post('https://www.homelibraries.org/me/emailing/', qs.stringify(
+        axios.post('https://www.homelibraries.org/me/emailing', qs.stringify(
                 { email }
             ))
             .then(function (response) {
@@ -32,7 +32,7 @@ import { SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_ERROR, SIGNIN_FAILURE } from './
 export const signInSendPassword = (email, password) => {
     return dispatch => {
         dispatch({ type: SIGNIN_REQUEST });
-        axios.post('https://www.homelibraries.org/me/signing/', qs.stringify(
+        axios.post('https://www.homelibraries.org/me/signing', qs.stringify(
                 { email, password }
             ))
             .then((response) => {
@@ -72,7 +72,7 @@ import { SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_ERROR, SIGNUP_FAILURE } from './
 export const signUp = (name, email) => {
     return dispatch => {
         dispatch({ type: SIGNUP_REQUEST });
-        axios.post('https://www.homelibraries.org/me/create/', qs.stringify(
+        axios.post('https://www.homelibraries.org/me/create', qs.stringify(
                 { name, email }
             ))
             .then((response) => {
@@ -106,7 +106,7 @@ import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE } from './actionTypes';
 export const checkAuth = () => {
     return dispatch => {
         dispatch({ type: AUTH_REQUEST });
-        axios.get('https://www.homelibraries.org/auth/check/')
+        axios.get('https://www.homelibraries.org/auth/check')
             .then((response) => {
                 dispatch({ type: AUTH_SUCCESS, data: response.data });
             })
@@ -126,7 +126,7 @@ import { EDIT_ACCOUNT_REQUEST, EDIT_ACCOUNT_SUCCESS, EDIT_ACCOUNT_FAILURE, EDIT_
 
 export const editAccount = (field, values) => {
     return dispatch => {
-        axios.post('https://www.homelibraries.org/me/editing/', qs.stringify(
+        axios.post('https://www.homelibraries.org/me/editing', qs.stringify(
                 { field, values }
             ))
             .then((response) => {
@@ -152,7 +152,7 @@ import { SIGNOFF_REQUEST, SIGNOFF_SUCCESS, SIGNOFF_FAILURE } from './actionTypes
 
 export const signOff = () => {
     return dispatch => {
-        axios.get('https://www.homelibraries.org/me/signoff/')
+        axios.get('https://www.homelibraries.org/me/signoff')
             .then((response) => {
                 dispatch({ type: SIGNOFF_SUCCESS });
             })

@@ -42,7 +42,7 @@ class EditBook extends Component {
     componentWillUpdate() {
     	if (this.state.editionState == 1) {
 	        this.props.mybooks.editing !== 2 
-	            ? browserHistory.push('/mybooks/')
+	            ? browserHistory.push('/mybooks')
 	                : false
     	}
     }

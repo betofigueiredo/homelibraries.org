@@ -12,10 +12,10 @@ class ActionBar extends Component {
 			        <div className="action-bar__logo"><Link to="/">{this.props.header}</Link></div>
 			        <nav>
 			        	<ul>
-			        		<li><Link to="/libraries/" activeClassName="active"><i className="fa fa-map fa-fw"></i> {translate[locale].libraries}</Link></li>
-			        		<li><Link to="/mybooks/" activeClassName="active"><i className="fa fa-book fa-fw"></i> {translate[locale].myBooks}</Link></li>
-			        		<li><Link to="/messages/" activeClassName="active"><i className="fa fa-comments fa-fw"></i> {translate[locale].messages}</Link></li>
-			        		<li><Link to="/account/" activeClassName="active"><i className="fa fa-user fa-fw"></i> {translate[locale].account}</Link></li>
+			        		<li><Link to="/libraries" activeClassName="active"><i className="fa fa-map fa-fw"></i> {translate[locale].libraries}</Link></li>
+			        		<li><Link to="/mybooks" activeClassName="active"><i className="fa fa-book fa-fw"></i> {translate[locale].myBooks}</Link></li>
+			        		<li><Link to="/messages" activeClassName="active"><i className="fa fa-comments fa-fw"></i> {translate[locale].messages}</Link></li>
+			        		<li><Link to="/account" activeClassName="active"><i className="fa fa-user fa-fw"></i> {translate[locale].account}</Link></li>
 			        	</ul>
 			        </nav>
 				</div>

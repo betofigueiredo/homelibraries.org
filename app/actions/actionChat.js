@@ -10,7 +10,7 @@ import { FETCH_CHAT_REQUEST, FETCH_CHAT_SUCCESS, FETCH_CHAT_FAILURE } from './ac
 export const getChat = (id) => {
     return dispatch => {
         dispatch({ type: FETCH_CHAT_REQUEST });
-        axios.get(`https://www.homelibraries.org/requests/chat/${id}/`)
+        axios.get(`https://www.homelibraries.org/requests/chat/${id}`)
         // axios.get('/requests/chat.json')
             .then((response) => {
                 dispatch({
@@ -36,7 +36,7 @@ export const getChat = (id) => {
 \*------------------------------------*/
 export const updateChat = (id) => {
     return dispatch => {
-        axios.get(`https://www.homelibraries.org/requests/chat/${id}/`)
+        axios.get(`https://www.homelibraries.org/requests/chat/${id}`)
             .then((response) => {
                 dispatch({
                     type: FETCH_CHAT_SUCCESS,
@@ -67,7 +67,7 @@ export const addNewChatMessage = (message) => {
         // dispatch({ type: ADD_NEWMESSAGE_REQUEST, message });
 
         dispatch({ type: ADD_NEWMESSAGE_REQUEST });
-        axios.post('/action/add-message/', {message})
+        axios.post('/action/add-message', {message})
             .then(function (response) {
                 console.log(response.message);
                 // dispatch({ type: ADD_NEWMESSAGE_SUCCESS, payload: response.data });
