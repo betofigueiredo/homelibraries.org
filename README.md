@@ -1,3 +1,5 @@
+New code coming soon.
+
 # HomeLibraries.org
 A project to share your books and find new ones to read in your neighborhood. Still in development. 
 
