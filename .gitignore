@@ -19,3 +19,6 @@ node_modules
 
 # Ignore build files
 build
+
+# Index file because of Google API key
+public/index.html
