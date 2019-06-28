@@ -1,0 +1,42 @@
+.modal.fade {
+	display: block;
+
+	&.in {
+		display: block;
+		background: rgba(0, 0, 0, 0.25); }
+}
+
+.modal-body {
+	position: relative; }
+
+.modal-dialog {
+	position: relative;
+
+	&.pdf {
+		width: 100%;
+		height: 100vh;
+		margin: 0 auto;
+		overflow: hidden; }
+}
+
+
+/* ================================================================== *\
+
+
+
+    #Small devices (tablets, 768px and up)
+
+
+
+\* ================================================================== */ @media (min-width: 768px) {
+
+
+.modal-dialog {
+	position: relative;
+
+	&.pdf {
+		width: 80%; }
+}
+
+
+/* ================================================================== */ } /* END devices */

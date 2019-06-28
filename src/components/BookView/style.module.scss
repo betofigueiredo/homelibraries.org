@@ -1,0 +1,156 @@
+@import "../../styles/global_variables.scss";
+
+.cell {
+	text-align: center; }
+
+.book-wrapper {
+	position: relative;
+	width: 100%;
+	margin: 0 auto 10px;
+	padding: 13px 18px 13px 60px;
+	background: #fff;
+	border: 2px solid #fff;
+	text-align: left;
+	@include border-radius(8px);
+	@include box-shadow(0 2px 18px rgba(54, 61, 74, 0.04));
+
+	&:after {
+		content: '';
+		display: table;
+		clear: both; }
+
+	> .icon {
+		position: absolute;
+		top: 14px;
+		left: 16px; }
+
+	> .info {
+		position: relative;
+		float: left;
+		width: 100%;
+
+		> .title {
+			margin: 0;
+			font-size: 16px;
+			line-height: 1.5;
+			font-weight: 500;
+			color: #000; }
+
+		> .author {
+			margin: 0;
+			font-size: 14px;
+			color: #84949a; }
+
+		> .link {
+			margin: 0;
+			font-size: 14px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+
+			> em {
+				color: #c7d3d8; }
+		}
+	}
+
+	&.unavailable {
+    opacity: 0.8;
+
+		> .info {
+			> .title {
+				color: #78868c; }
+		}
+	}
+
+	> .buttons {
+		position: relative;
+		float: left;
+		width: 36%;
+		padding-top: 11px; }
+}
+
+.edit-button {
+	position: absolute;
+	top: 11px;
+	right: 34px;
+	width: 42px;
+	height: 46px;
+	color: #8c979a;
+	outline: none;
+
+	&:hover {
+		color: #000;
+		cursor: pointer; }
+}
+
+.delete-button {
+	position: absolute;
+	top: 11px;
+	right: -7px;
+	width: 42px;
+	height: 46px;
+	color: #8c979a;
+	outline: none;
+
+	&:hover {
+		color: #000;
+		cursor: pointer; }
+}
+
+.delete-confirm {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100%;
+	text-align: right;
+	padding-top: 11px;
+
+	> .delete-text {
+		display: inline-block; }
+}
+
+
+/* ================================================================== *\
+
+
+		@media (min-width: 768px) and (max-width: 1024px) {
+
+    #Small devices (tablets, 768px and up)
+
+
+
+\* ================================================================== */ @media (min-width: 768px) {
+
+
+
+
+
+/* ================================================================== *\
+
+
+
+    #Medium devices (desktops, 992px and up)
+
+
+
+\* ================================================================== */ } @media (min-width: 992px) {
+
+
+
+
+
+/* ================================================================== *\
+
+
+
+		#Large devices (large desktops, 1200px and up)
+
+
+
+\* ================================================================== */ } @media (min-width: 1200px) {
+
+
+
+
+
+/* ================================================================== */ } /* END devices */

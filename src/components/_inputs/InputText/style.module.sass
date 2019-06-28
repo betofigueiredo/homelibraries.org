@@ -1,0 +1,28 @@
+@import "../../../styles/global_variables.scss"
+
+.label
+    font-weight: 500;
+
+.form-control
+	height: 42px
+	padding: 0.5rem 0.7rem
+	background: #f8f9fa
+	border: none
+	border-bottom: 3px solid transparent
+	@include box-shadow(none)
+
+	&:hover
+		background: #f8f9fa
+		border: none
+		border-bottom: 3px solid #c9d4d6
+		@include box-shadow(none)
+
+	&:active,
+	&:focus,
+	&:active:hover,
+	&:active:focus
+		background: #f8f9fa
+		border: none
+		border-bottom: 3px solid #68ccde
+		@include box-shadow(none)
+

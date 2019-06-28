@@ -1,0 +1,98 @@
+@import "../../styles/global_variables.scss";
+
+.contact-wrapper {
+	display: block;
+	position: relative;
+	width: 100%;
+	min-height: 150px;
+	margin: 0 0 30px 0;
+	padding: 27px 25px 34px;
+	background: #fff;
+	border: 1px solid #e1e3e8;
+	text-align: center;
+	@include border-radius(4px);
+	@include transition-one(all .15s ease);
+
+	&:hover {
+		// transform: translate3d(0, -2px, 0);
+		border: 1px solid #b2b5bb;
+		@include box-shadows(0 1px 14px rgba(50,50,93,.05), 0 1px 10px rgba(0,0,0,.05)); }
+
+	&.selected {
+		border: 3px solid #ce3279;
+		padding: 25px 23px 32px; }
+
+	> i {
+    position: absolute;
+    top: -4px;
+    left: -1px;
+    color: #ce3279;
+    font-size: 25px; }
+
+	> .fake-image {
+		position: relative;
+		width: 60px;
+		height: 60px;
+		margin: 0 auto;
+		padding: 15px 0 0;
+		background: #f6f7f9;
+		font-size: 21px;
+		color: #cb327c;
+		@include border-radius(60px); }
+
+	> .name {
+		margin: 10px 0 0;
+		color: #0a0a0a;
+		font-size: 18px; }
+
+	> .email {
+		margin: 10px 0 0;
+		font-size: 14px;
+		color: #c03286;
+
+	> i {
+		position: absolute;
+		top: 25px;
+		left: 23px;
+		font-size: 21px;
+		color: #cb327c; }
+
+		> div {
+			color: #babcbf; }
+	}
+
+	> .contacts {
+		margin: 10px 0 0;
+		font-size: 14px;
+		color: #babcbf; }
+
+	> .contact-button {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		background: none;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		z-index: 50; }
+}
+
+
+/* ================================================================== *\
+
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+
+    #Small devices (tablets, 768px and up)
+
+
+
+\* ================================================================== */ @media (min-width: 768px) {
+
+
+
+
+
+/* ================================================================== */ } /* END devices */

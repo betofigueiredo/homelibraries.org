@@ -1,0 +1,3 @@
+export const UPDATE_MYBOOKS = 'UPDATE_MYBOOKS';
+export const UPDATE_MYBOOKS_RAW = 'UPDATE_MYBOOKS_RAW';
+export const UPDATE_BOOK = 'UPDATE_BOOK';
