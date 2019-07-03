@@ -11,13 +11,6 @@ import BookView from '../BookView/BookView';
 // Functions
 import { _get } from '../../functions/_requests';
 
-/**
- * @render react
- * @name ProfilePreview
- * @description
- * @example
- */
-
 class ProfilePreview extends Component {
 	// static getDerivedStateFromProps(nextProps, prevState) {
 	// 	const { profile_preview_id } = nextProps.libraries;
