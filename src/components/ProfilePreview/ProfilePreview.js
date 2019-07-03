@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // CSS
 import CSSModules from 'react-css-modules';
-import styles from './style.module.scss';
+import styles from './style.module.sass';
 
 // Components
 import BookView from '../BookView/BookView';
