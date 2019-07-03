@@ -78,6 +78,7 @@ class ProfilePreview extends Component {
 		const letters = library.letters || '';
 		const color = library.color || '';
 		const books = library.books || [];
+		const number_of_books = books.length;
 
 		if (loading === 1) {
 			return (
@@ -89,21 +90,40 @@ class ProfilePreview extends Component {
 
 		return (
 			<div styleName={wrapper_class}>
-				{/* <button
-					type="button"
-					onClick={this.closeProfile}>
-					Close
-				</button> */}
+				<div styleName="content">
+					{/* <button
+						type="button"
+						onClick={this.closeProfile}>
+						Close
+					</button> */}
 
-				<div styleName="profile-picture" style={{ background: color }}>{letters}</div>
-				<div styleName="name">{name}</div>
+					<div styleName="profile-picture" style={{ background: color }}>{letters}</div>
+					<div styleName="name">{name}</div>
+					<div styleName="location">São Paulo, SP</div>
 
-				<button type="button">Mensagem</button>
-				<button type="button">Adicionar como favorito</button>
+					<div styleName="details">
+						<div styleName="d-block">
+							<div styleName="number">{number_of_books}</div>
+							Livros
+						</div>
+						<div styleName="d-block">
+							<div styleName="number">12</div>
+							Empréstimos
+						</div>
+						<div styleName="d-block">
+							<div styleName="number">3</div>
+							Livros
+						</div>
+					</div>
 
-				{books.map(book => (
-					<BookView book={book} />
-				))}
+
+					<button type="button">Mensagem</button>
+					<button type="button">Adicionar como favorito</button>
+
+					{books.map(book => (
+						<BookView book={book} />
+					))}
+				</div>
 			</div>
 		);
 	}
