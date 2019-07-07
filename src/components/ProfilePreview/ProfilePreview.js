@@ -6,28 +6,20 @@ import CSSModules from 'react-css-modules';
 import styles from './style.module.sass';
 
 // Components
+import SideBar from '../SideBar';
 import BookView from '../BookView/BookView';
 
 // Functions
 import { _get } from '../../functions/_requests';
 
 class ProfilePreview extends Component {
-	// static getDerivedStateFromProps(nextProps, prevState) {
-	// 	const { profile_preview_id } = nextProps.libraries;
-	// }
-
 	state = {
-		show: false,
 		loading: 0,
 		library: {},
 	};
 
 	componentDidMount() {
 		this.buscaProfile();
-		setTimeout(() => this.setState({ show: true }), 60);
-		setTimeout(() => {
-			window.addEventListener('keyup', this.escClose);
-		}, 400);
 	}
 
 	componentDidUpdate(prevProps/* , prevState */) {
@@ -36,16 +28,6 @@ class ProfilePreview extends Component {
 
 		if (prev_id !== next_id) {
 			this.buscaProfile();
-		}
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener('keyup', this.escClose);
-	}
-
-	escClose = (e) => {
-		if (e.keyCode === 27) {
-			this.closeProfile();
 		}
 	}
 
@@ -69,11 +51,7 @@ class ProfilePreview extends Component {
 	}
 
 	render() {
-		const { show, loading, library } = this.state;
-		const wrapper_class = show
-			? 'profile-wrapper in'
-			: 'profile-wrapper';
-
+		const { loading, library } = this.state;
 		const name = library.name || '';
 		const letters = library.letters || '';
 		const color = library.color || '';
@@ -82,20 +60,20 @@ class ProfilePreview extends Component {
 
 		if (loading === 1) {
 			return (
-				<div styleName={wrapper_class}>
-					loading...
-				</div>
+				<SideBar closeSidebar={this.closeProfile}>
+					<p>loading...</p>
+				</SideBar>
 			);
 		}
 
 		return (
-			<div styleName={wrapper_class}>
+			<SideBar closeSidebar={this.closeProfile}>
 				<div styleName="content">
-					{/* <button
+					<button
 						type="button"
 						onClick={this.closeProfile}>
 						Close
-					</button> */}
+					</button>
 
 					<div styleName="profile-picture" style={{ background: color }}>{letters}</div>
 					<div styleName="name">{name}</div>
@@ -121,10 +99,12 @@ class ProfilePreview extends Component {
 					<button type="button">Adicionar como favorito</button>
 
 					{books.map(book => (
-						<BookView book={book} />
+						<BookView
+							key={book.id}
+							book={book} />
 					))}
 				</div>
-			</div>
+			</SideBar>
 		);
 	}
 }

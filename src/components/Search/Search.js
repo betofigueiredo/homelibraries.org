@@ -6,6 +6,7 @@ import CSSModules from 'react-css-modules';
 import styles from './style.module.sass';
 
 // Components
+import SideBar from '../SideBar';
 import InputText from '../_inputs/InputText/InputText';
 import Button from '../Button/Button';
 import RadiusButton from './RadiusButton';
@@ -21,7 +22,6 @@ class Search extends Component {
 	}
 
 	state = {
-		show: false,
 		address: '',
 		lat: 0,
 		lng: 0,
@@ -29,23 +29,6 @@ class Search extends Component {
 		author_name: '',
 		library_name: '',
 	};
-
-	componentDidMount() {
-		setTimeout(() => this.setState({ show: true }), 60);
-		setTimeout(() => {
-			window.addEventListener('keyup', this.escClose);
-		}, 400);
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener('keyup', this.escClose);
-	}
-
-	escClose = (e) => {
-		if (e.keyCode === 27) {
-			this.closeSearch();
-		}
-	}
 
 	closeSearch = () => {
 		// const { updateLibrariesRaw } = this.props;
@@ -86,16 +69,13 @@ class Search extends Component {
 	}
 
 	render() {
-		const { show, radius } = this.state;
+		const { radius } = this.state;
 		const { search, fetching } = this.props;
-		const wrapper_class = show
-			? 'search-wrapper in'
-			: 'search-wrapper';
 
 		const all_radius = [5, 10, 15, 20, 25];
 
 		return (
-			<div styleName={wrapper_class}>
+			<SideBar closeSidebar={this.closeSearch}>
 				<div styleName="content">
 					<div styleName="row">
 						<h5 styleName="h5">Encontre livros na sua região</h5>
@@ -134,7 +114,7 @@ class Search extends Component {
 							onClick={this.startSearch} />
 					</div>
 				</div>
-			</div>
+			</SideBar>
 		);
 	}
 }

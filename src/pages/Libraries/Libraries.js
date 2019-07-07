@@ -7,8 +7,8 @@ import styles from './style.module.scss';
 
 // Components
 import Map from '../../components/Map/Map';
-import ProfilePreview from '../../components/ProfilePreview/ProfilePreview';
-import Search from '../../components/Search/Search';
+import ProfilePreview from '../../components/ProfilePreview';
+import Search from '../../components/Search';
 
 const Libraries = ({
 	// =========== state
