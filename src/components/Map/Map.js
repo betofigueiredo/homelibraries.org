@@ -49,6 +49,14 @@ class Map extends Component {
 			this.circle.setMap(null);
 			this.drawCircle(lat, lng);
 		}
+
+		if (
+			(prev_search.lat !== lat || prev_search.lng !== lng)
+			&& this.map !== undefined
+		) {
+			this.map.panTo({ lat, lng });
+			this.drawCenterIcon(lat, lng);
+		}
 	}
 
 	componentWillUnmount() {

@@ -39,11 +39,31 @@ class Search extends Component {
 		this.setState(values);
 	}
 
-	startSearch = () => {
+	handleAddressFirst = () => {
+		const { address, lat, lng } = this.state;
+
+		if (address !== '' && window.google !== undefined) {
+			this.geocoder = new window.google.maps.Geocoder();
+			this.geocoder.geocode({ address }, (results, status) => {
+				if (status === window.google.maps.GeocoderStatus.OK) {
+					const location = (((results || [])[0] || {})
+						.geometry || {})
+						.location || {};
+					this.startSearch(location.lat(), location.lng());
+					return;
+				}
+
+				this.startSearch(lat, lng);
+			});
+			return;
+		}
+
+		this.startSearch(lat, lng);
+	}
+
+	startSearch = (lat, lng) => {
 		const {
 			address,
-			lat,
-			lng,
 			radius,
 			author_name,
 			library_name,
@@ -111,7 +131,7 @@ class Search extends Component {
 						<Button
 							text="Buscar"
 							loading={fetching}
-							onClick={this.startSearch} />
+							onClick={this.handleAddressFirst} />
 					</div>
 				</div>
 			</SideBar>
