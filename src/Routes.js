@@ -24,6 +24,10 @@ const asyncMyBooks = Loadable({
 	loader: () => import('./pages/MyBooks'),
 	loading,
 });
+const asyncMessages = Loadable({
+	loader: () => import('./pages/Messages'),
+	loading,
+});
 const asyncAccount = Loadable({
 	loader: () => import('./pages/Account/Account'),
 	loading,
@@ -49,6 +53,7 @@ const Routes = () => (
 	<Switch>
 		<Route path="/libraries" exact component={asyncLibraries} />
 		<Route path="/mybooks" exact component={asyncMyBooks} />
+		<Route path="/messages" exact component={asyncMessages} />
 		<Route path="/account" exact component={asyncAccount} />
 		<Route path="/account/name" exact component={asyncAccountName} />
 		<Route path="/account/url" exact component={asyncAccountUrl} />
