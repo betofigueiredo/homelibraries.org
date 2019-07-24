@@ -22,12 +22,12 @@ class Search extends Component {
 	}
 
 	state = {
-		address: '',
+		address: this.props.search.address,
 		lat: 0,
 		lng: 0,
 		radius: 5,
-		author_name: '',
-		library_name: '',
+		author_name: this.props.search.author_name,
+		library_name: this.props.search.library_name,
 	};
 
 	closeSearch = () => {
@@ -81,16 +81,17 @@ class Search extends Component {
 			library_name,
 		});
 		getLibraries({
-			address,
 			lat,
 			lng,
 			radius,
+			bookauthor: author_name,
+			libraries: library_name,
 		});
 	}
 
 	render() {
-		const { radius } = this.state;
-		const { search, fetching } = this.props;
+		const { radius, address, author_name, library_name } = this.state;
+		const { fetching } = this.props;
 
 		const all_radius = [5, 10, 15, 20, 25];
 
@@ -114,18 +115,25 @@ class Search extends Component {
 						<InputText
 							label="Endereço"
 							field="address"
-							default_value={search.address}
-							updateFunc={this.handleEdition} />
+							default_value={address}
+							updateFunc={this.handleEdition}
+							onEnterPressed={this.handleAddressFirst} />
 					</div>
 					<div styleName="row">
 						<InputText
 							label="Livro ou Autor"
-							field="book_author" />
+							field="author_name"
+							default_value={author_name}
+							updateFunc={this.handleEdition}
+							onEnterPressed={this.handleAddressFirst} />
 					</div>
 					<div styleName="row">
 						<InputText
 							label="Nome da pessoa/biblioteca"
-							field="library" />
+							field="library_name"
+							default_value={library_name}
+							updateFunc={this.handleEdition}
+							onEnterPressed={this.handleAddressFirst} />
 					</div>
 					<div styleName="row buttons">
 						<Button
