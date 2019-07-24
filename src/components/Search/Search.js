@@ -40,6 +40,9 @@ class Search extends Component {
 	}
 
 	handleAddressFirst = () => {
+		const { updateLibrariesRaw } = this.props;
+		updateLibrariesRaw({ fetching: 10 });
+
 		const { address, lat, lng } = this.state;
 
 		if (address !== '' && window.google !== undefined) {
@@ -152,6 +155,7 @@ Search.propTypes = {
 	updateSearchRaw: PropTypes.func.isRequired,
 	getLibraries: PropTypes.func.isRequired,
 	fetching: PropTypes.number.isRequired,
+	updateLibrariesRaw: PropTypes.func.isRequired,
 };
 
 export default CSSModules(Search, styles, { allowMultiple: true });
