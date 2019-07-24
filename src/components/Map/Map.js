@@ -24,10 +24,6 @@ class Map extends Component {
 
 	state = {
 		map_height: 500,
-		lat: -23.991506,
-		lng: -46.258046,
-		zoom: this.props.map_data.zoom,
-		// radius: 5,
 	};
 
 	componentDidMount() {
@@ -74,8 +70,8 @@ class Map extends Component {
 	}
 
 	initLatLng() {
-		const { map_data } = this.props;
-		const { lat, lng } = map_data;
+		const { search } = this.props;
+		const { lat, lng } = search;
 
 		if (window.navigator.geolocation && (lat === 0 || lng === 0)) {
 			window.navigator.geolocation.getCurrentPosition(position => {
@@ -94,8 +90,8 @@ class Map extends Component {
 	}
 
 	drawMap() {
-		const { map_data, search, getLibraries } = this.props;
-		const { zoom } = map_data;
+		const { map, search, getLibraries } = this.props;
+		const { zoom } = map;
 		const { lat, lng, radius } = search;
 		getLibraries({ lat, lng, radius });
 		const map_element = document.getElementById('map_element');
@@ -195,7 +191,7 @@ class Map extends Component {
 }
 
 Map.propTypes = {
-	map_data: PropTypes.object,
+	map: PropTypes.object,
 	libraries: PropTypes.object,
 	draw_circle: PropTypes.bool,
 	getLibraries: PropTypes.func,
@@ -205,20 +201,8 @@ Map.propTypes = {
 };
 
 Map.defaultProps = {
-	map_data: {
+	map: {
 		zoom: 13,
-		radius: 5,
-		lat: -23.991506,
-		lng: -46.258046,
-		address: '',
-		book_author: '',
-		library: '',
-		preview: {
-			open: 'library-info-window',
-			name: '',
-			url: '',
-			number_of_books: 0,
-		},
 	},
 	search: {},
 	libraries: {},
