@@ -31,8 +31,8 @@ class Search extends Component {
 	};
 
 	closeSearch = () => {
-		// const { updateLibrariesRaw } = this.props;
-		// updateLibrariesRaw({ profile_preview_id: 0 });
+		const { updateSearchRaw } = this.props;
+		updateSearchRaw({ open: false });
 	}
 
 	handleEdition = (values) => {

@@ -1,4 +1,5 @@
 const search = {
+	open: false,
 	address: '',
 	lat: -23.991506,
 	lng: -46.258046,

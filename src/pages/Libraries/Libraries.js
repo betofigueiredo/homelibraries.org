@@ -18,6 +18,7 @@ const Libraries = ({
 	map,
 	search,
 	// =========== local funcs
+	openSearch,
 	// =========== props funcs
 	getLibraries,
 	updateLibrariesRaw,
@@ -28,11 +29,15 @@ const Libraries = ({
 
 	return (
 		<div styleName="libraries-wrapper">
-			<Search
-				search={search}
-				updateSearchRaw={updateSearchRaw}
-				getLibraries={getLibraries}
-				fetching={fetching} />
+			<button type="button" onClick={openSearch}>aaaa</button>
+			{search.open && (
+				<Search
+					search={search}
+					updateSearchRaw={updateSearchRaw}
+					getLibraries={getLibraries}
+					fetching={fetching}
+					updateLibrariesRaw={updateLibrariesRaw} />
+			)}
 
 			{profile_preview_id !== 0 && (
 				<ProfilePreview
@@ -60,6 +65,7 @@ Libraries.propTypes = {
 	map: PropTypes.object.isRequired,
 	search: PropTypes.object.isRequired,
 	// =========== local funcs
+	openSearch: PropTypes.object.isRequired,
 	// =========== props funcs
 	getLibraries: PropTypes.func.isRequired,
 	updateLibrariesRaw: PropTypes.func.isRequired,

@@ -32,6 +32,11 @@ class LibrariesContainer extends Component {
 		});
 	}
 
+	openSearch = () => {
+		const { updateSearchRaw } = this.props;
+		updateSearchRaw({ open: true });
+	}
+
 	// receiveLatLng = (lat, lng) => {
 	// 	/**
 	// 	 * Wait for lat and lng to be set on the map
@@ -64,7 +69,8 @@ class LibrariesContainer extends Component {
 
 				<Libraries
 					{...this.state}
-					{...this.props} />
+					{...this.props}
+					openSearch={this.openSearch} />
 
 			</LayoutWrapper>
 		);
@@ -78,6 +84,7 @@ LibrariesContainer.propTypes = {
 	updateUserRaw: PropTypes.func.isRequired,
 	updateLibrariesRaw: PropTypes.func.isRequired,
 	updateMapRaw: PropTypes.func.isRequired,
+	updateSearchRaw: PropTypes.func.isRequired,
 	// =========== router
 	// match: PropTypes.object.isRequired,
 	// history: PropTypes.object.isRequired,
