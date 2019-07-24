@@ -6,7 +6,7 @@ import CSSModules from 'react-css-modules';
 import styles from './style.module.scss';
 
 // Components
-import Map from '../../components/Map/Map';
+import Map from '../../components/Map';
 import ProfilePreview from '../../components/ProfilePreview';
 import Search from '../../components/Search';
 
