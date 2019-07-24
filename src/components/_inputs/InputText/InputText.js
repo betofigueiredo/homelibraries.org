@@ -30,6 +30,12 @@ class InputText extends Component {
 		updateFunc({ [field]: typed });
 	}
 
+	onKeyUp = (e) => {
+		if (e.keyCode === 13) {
+			this.props.onEnterPressed();
+		}
+	}
+
 	render() {
 		const { value } = this.state;
 		const { label } = this.props;
@@ -42,7 +48,8 @@ class InputText extends Component {
 					className="form-control"
 					styleName="form-control"
 					value={value}
-					onChange={this.handleEdition} />
+					onChange={this.handleEdition}
+					onKeyUp={this.onKeyUp} />
 			</label>
 		);
 	}
@@ -53,11 +60,13 @@ InputText.propTypes = {
 	field: PropTypes.string.isRequired,
 	default_value: PropTypes.string,
 	updateFunc: PropTypes.func,
+	onEnterPressed: PropTypes.func,
 };
 
 InputText.defaultProps = {
 	default_value: '',
 	updateFunc: () => {},
+	onEnterPressed: () => {},
 };
 
 export default CSSModules(InputText, styles, { allowMultiple: true });
