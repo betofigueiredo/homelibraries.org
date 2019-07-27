@@ -11,5 +11,6 @@ export const setClasses = (first_class, additional_classes) => {
 		.map(c => c)
 		.filter(c => additional_classes[c])
 		.join(' ');
+
 	return `${first_class} ${additional_classes_str}`;
 };

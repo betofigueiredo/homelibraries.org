@@ -118,7 +118,7 @@ class BookEdition extends Component {
 					</button>
 				) */}
 				<div styleName="icon"><BookSVG fill="#a8dee6" /></div>
-				<div styleName="content">
+				<div styleName="content" data-test="component-bookedition">
 					{type === 'add' ? (
 						<h5 styleName="h5">Cadastrar novo livro</h5>
 					) : (
