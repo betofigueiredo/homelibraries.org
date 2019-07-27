@@ -70,7 +70,7 @@ Libraries.propTypes = {
 	map: PropTypes.object.isRequired,
 	search: PropTypes.object.isRequired,
 	// =========== local funcs
-	openSearch: PropTypes.object.isRequired,
+	openSearch: PropTypes.func.isRequired,
 	// =========== props funcs
 	getLibraries: PropTypes.func.isRequired,
 	updateLibrariesRaw: PropTypes.func.isRequired,
