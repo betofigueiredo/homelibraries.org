@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // CSS
 import CSSModules from 'react-css-modules';
-import styles from './style.module.scss';
+import styles from './style.module.sass';
 
 // Components
 import Map from '../../components/Map';
@@ -29,7 +29,12 @@ const Libraries = ({
 
 	return (
 		<div styleName="libraries-wrapper">
-			<button type="button" onClick={openSearch}>aaaa</button>
+			<button
+				type="button"
+				styleName="search-button"
+				onClick={openSearch}>
+				<i className="fa fa-search" aria-hidden="true" />
+			</button>
 			{search.open && (
 				<Search
 					search={search}
