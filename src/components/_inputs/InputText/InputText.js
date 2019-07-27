@@ -38,13 +38,14 @@ class InputText extends Component {
 
 	render() {
 		const { value } = this.state;
-		const { label } = this.props;
+		const { input_id, label } = this.props;
 
 		return (
 			<label styleName="label">
 				{label}
 				<input
 					type="text"
+					id={input_id}
 					className="form-control"
 					styleName="form-control"
 					value={value}
@@ -56,6 +57,7 @@ class InputText extends Component {
 }
 
 InputText.propTypes = {
+	input_id: PropTypes.string,
 	label: PropTypes.string.isRequired,
 	field: PropTypes.string.isRequired,
 	default_value: PropTypes.string,
@@ -64,6 +66,7 @@ InputText.propTypes = {
 };
 
 InputText.defaultProps = {
+	input_id: '',
 	default_value: '',
 	updateFunc: () => {},
 	onEnterPressed: () => {},
