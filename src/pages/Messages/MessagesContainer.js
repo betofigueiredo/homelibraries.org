@@ -13,6 +13,16 @@ import Messages from './Messages';
 class MessagesContainer extends Component {
 	state = {};
 
+	// componentDidMount() {
+	// 	document.title = 'Meus livros - Home Libraries';
+	// 	const { getMyMessages } = this.props;
+	// 	getMyMessages('/messages/mybooks', {});
+	// }
+
+	componentDidMount() {
+		console.log(this.props);
+	}
+
 	render() {
 		const { user, match } = this.props;
 
