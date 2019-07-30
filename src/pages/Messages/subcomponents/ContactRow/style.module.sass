@@ -1,29 +1,35 @@
 @import "../../../../styles/global_variables.scss"
 
-.icon
-	position: absolute
-	top: 14px
-	left: 16px
-
-
-.content
+.contact-card
 	position: relative
 	float: left
 	width: 100%
-	padding: 0 26px 0 0
+	margin: 0 auto 10px
+	padding: 18px 18px 19px 80px
+	background: #fff
+	border: 1px solid #e8ebed
+	text-align: left
+	color: #84949a
+	font-size: 14px
+	@include border-radius(8px)
+	// @include box-shadow(0 2px 18px rgba(54, 61, 74, 0.04))
+
+	> .picture
+		position: absolute
+		top: 0
+		left: 0
+
+	> .nome
+		font-size: 16px
+		line-height: 1.5
+		font-weight: 500
+		color: #000
 
 
-.h5
-	margin-top: 6px
-	margin-bottom: 15px
-	font-weight: 500
 
 
-.close-button
-	position: absolute
-	top: 14px
-	right: 20px
-	font-size: 23px
-	width: 40px
-	height: 40px
-	z-index: 10
+
+
+
+
+

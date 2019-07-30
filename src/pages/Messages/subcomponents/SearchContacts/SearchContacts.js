@@ -13,7 +13,7 @@ import styles from './style.module.sass';
 // Functions
 // import { _post } from '../../../../functions/_requests';
 
-class ContactRow extends Component {
+class SearchContacts extends Component {
 	state = {};
 
 	render() {
@@ -21,21 +21,19 @@ class ContactRow extends Component {
 		console.log(contact);
 
 		return (
-			<div styleName="contact-card" data-test="component-contactrow">
-				<div styleName="picture">.</div>
-				<div styleName="nome">Beto Figueiredo</div>
-				Last message from...
+			<div styleName="content" data-test="component-searchcontacts">
+				.
 			</div>
 		);
 	}
 }
 
-ContactRow.propTypes = {
+SearchContacts.propTypes = {
 	contact: PropTypes.object,
 };
 
-ContactRow.defaultProps = {
+SearchContacts.defaultProps = {
 	contact: {},
 };
 
-export default CSSModules(ContactRow, styles, { allowMultiple: true });
+export default CSSModules(SearchContacts, styles, { allowMultiple: true });
