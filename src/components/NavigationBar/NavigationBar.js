@@ -64,7 +64,7 @@ const NavigationBar = ({ match }) => {
 					icon="fa fa-star"
 					link="/favorites"
 					match={match}
-					url_matches={messages_matches} />
+					url_matches={[]} />
 				<NavButton
 					label="Conta"
 					icon="fa fa-user"
