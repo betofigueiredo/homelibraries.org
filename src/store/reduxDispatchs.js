@@ -1,6 +1,7 @@
 import { bindActionCreators } from 'redux';
 import * as librariesActions from './libraries/actions';
 import * as mapActions from './map/actions';
+import * as messagesActions from './messages/actions';
 import * as mybooksActions from './mybooks/actions';
 import * as searchActions from './search/actions';
 import * as uiActions from './ui/actions';
@@ -9,6 +10,7 @@ import * as userActions from './user/actions';
 const actions = {
 	...librariesActions,
 	...mapActions,
+	...messagesActions,
 	...mybooksActions,
 	...searchActions,
 	...uiActions,
@@ -20,6 +22,7 @@ export const buildMapStateToProps = (props, fields = null) => {
 		return ({
 			libraries: props.libraries,
 			map: props.map,
+			messages: props.messages,
 			mybooks: props.mybooks,
 			search: props.search,
 			ui: props.ui,
@@ -32,15 +35,6 @@ export const buildMapStateToProps = (props, fields = null) => {
 		[current]: { ...props[current] },
 	}), {});
 };
-
-// export const buildMapStateToProps = props => ({
-// 	libraries: props.libraries,
-// 	map: props.map,
-// 	mybooks: props.mybooks,
-// 	search: props.search,
-// 	ui: props.ui,
-// 	user: props.user,
-// });
 
 export const buildmapDispatchToProps = dispatch => (
 	bindActionCreators(actions, dispatch)

@@ -12,6 +12,7 @@ import rootSaga from './combineSagas';
 // reducers
 import libraries from './libraries/reducers';
 import map from './map/reducers';
+import messages from './messages/reducers';
 import mybooks from './mybooks/reducers';
 import search from './search/reducers';
 import ui from './ui/reducers';
@@ -20,6 +21,7 @@ import user from './user/reducers';
 const reducers = combineReducers({
 	libraries,
 	map,
+	messages,
 	mybooks,
 	search,
 	ui,
