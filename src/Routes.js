@@ -5,8 +5,7 @@ import Loadable from 'react-loadable';
 import LoadingPage from './components/_loadings/LoadingPage/LoadingPage';
 
 // Import Components
-// import Layout from './hocs/Layout/Layout';
-import NotFound404 from './pages/NotFound404/NotFound404';
+import NotFound404 from './pages/NotFound404';
 import SignOut from './pages/SignOut';
 import SignIn from './pages/SignIn';
 
