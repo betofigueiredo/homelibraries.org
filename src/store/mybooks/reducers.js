@@ -11,6 +11,7 @@ import {
 
 // Functions
 import { buildMyBooks } from './utils';
+import { logoffUser } from '../../functions/logoffUser';
 
 const reducer = (state = mybooks, action) => {
 	switch (action.type) {
@@ -71,9 +72,12 @@ const reducer = (state = mybooks, action) => {
 	}
 
 	case FETCH_FAILED: {
+		const not_logged = action.status === 403;
+		const fetching = not_logged ? 40 : 30;
+		if (not_logged) logoffUser();
 		return {
 			...state,
-			fetching: 30,
+			fetching,
 		};
 	}
 

@@ -6,16 +6,22 @@ import styles from './style.module.sass';
 
 // Components
 import ContactsList from './subcomponents/ContactsList';
+import Chat from './subcomponents/Chat';
 
 const Messages = () => (
-	<div className="grid-container">
-		<div className="grid-x grid-padding-x">
-			<ContactsList />
-			<div className="small-7 cell">
-				.
-			</div>
-		</div>
+	<div styleName="messages-wrapper">
+		<ContactsList />
+		<Chat />
 	</div>
 );
+
+// const Messages = () => (
+// 	<div className="grid-container">
+// 		<div className="grid-x grid-padding-x">
+// 			<ContactsList />
+// 			<Chat />
+// 		</div>
+// 	</div>
+// );
 
 export default CSSModules(Messages, styles, { allowMultiple: true });

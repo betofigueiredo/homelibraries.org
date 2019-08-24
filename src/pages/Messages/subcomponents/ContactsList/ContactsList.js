@@ -30,7 +30,7 @@ class ContactsList extends Component {
 		console.log(contact, mybooks);
 
 		return (
-			<div className="small-5 cell">
+			<div styleName="contacts-list">
 				<h3 styleName="h3">Mensagens</h3>
 				<ContactRow />
 				<ContactRow />

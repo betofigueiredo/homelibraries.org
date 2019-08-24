@@ -11,6 +11,7 @@ import AddBookForm from './subcomponents/AddBookForm/AddBookForm';
 import NoBooks from './subcomponents/NoBooks/NoBooks';
 import BooksList from './subcomponents/BooksList/BooksList';
 
+/* eslint-disable */
 const MyBooks = ({
 	// =========== state
 	// =========== props
@@ -22,9 +23,9 @@ const MyBooks = ({
 	updateMyBooksRaw,
 }) => {
 	const { logged } = user;
-	const { all_ids } = mybooks;
+	const { fetching, all_ids } = mybooks;
 
-	if (!logged) {
+	if (fetching === 40) {
 		return (
 			<p>not logged</p>
 		);

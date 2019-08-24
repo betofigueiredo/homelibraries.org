@@ -33,7 +33,8 @@ export function* fetchData(action) {
 		const payload = yield call(() => fetchBooks(action.url, action.params));
 		yield put({ type: FETCH_SUCCEEDED, payload });
 	} catch (error) {
-		yield put({ type: FETCH_FAILED, error });
+		const { status } = (error || {}).response || {};
+		yield put({ type: FETCH_FAILED, status });
 	}
 }
 

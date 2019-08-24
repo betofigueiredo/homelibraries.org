@@ -10,6 +10,7 @@ import styles from './style.module.scss';
 import LoadingPage from '../_loadings/LoadingPage/LoadingPage';
 import NavigationBar from '../NavigationBar/NavigationBar';
 
+/* eslint-disable */
 const LayoutWrapper = ({
 	fetching,
 	user,

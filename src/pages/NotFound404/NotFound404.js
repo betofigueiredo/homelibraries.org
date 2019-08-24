@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // CSS
 import CSSModules from 'react-css-modules';
 import styles from './style.module.scss';
-
-/**
- * @render react
- * @name NotFound404
- * @description Container para página não encontrada
- * @example
- */
 
 class NotFound404 extends Component {
 	static getDerivedStateFromProps(nextProps) {
@@ -47,5 +41,10 @@ class NotFound404 extends Component {
 		);
 	}
 }
+
+NotFound404.propTypes = {
+	match: PropTypes.object.isRequired,
+	history: PropTypes.object.isRequired,
+};
 
 export default CSSModules(NotFound404, styles, { allowMultiple: true });

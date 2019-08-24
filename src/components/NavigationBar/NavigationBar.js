@@ -54,17 +54,17 @@ const NavigationBar = ({ match }) => {
 					match={match}
 					url_matches={mybooks_matches} />
 				<NavButton
+					label="Trocas"
+					icon="fa fa-handshake-o"
+					link="/trades"
+					match={match}
+					url_matches={[]} />
+				<NavButton
 					label="Mensagens"
 					icon="fa fa-comments"
 					link="/messages"
 					match={match}
 					url_matches={messages_matches} />
-				<NavButton
-					label="Favoritos"
-					icon="fa fa-star"
-					link="/favorites"
-					match={match}
-					url_matches={[]} />
 				<NavButton
 					label="Conta"
 					icon="fa fa-user"

@@ -13,19 +13,6 @@ import { setClasses } from '../../functions/_setClasses';
 // import { _post } from '../../functions/_requests';
 
 class BookView extends Component {
-	static propTypes = {
-		book: PropTypes.shape({
-			id: PropTypes.number.isRequired,
-			title: PropTypes.string.isRequired,
-			author: PropTypes.string.isRequired,
-			link: PropTypes.string.isRequired,
-			available: PropTypes.bool.isRequired,
-		}).isRequired,
-		// mybooks: PropTypes.object.isRequired,
-		// updateMyBooksRaw: PropTypes.func.isRequired,
-		// updateBook: PropTypes.func.isRequired,
-	};
-
 	static getDerivedStateFromProps(nextProps) {
 		const { book, updateBook } = nextProps;
 		if (book.edited) {
@@ -73,5 +60,17 @@ class BookView extends Component {
 		);
 	}
 }
+
+BookView.propTypes = {
+	book: PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		title: PropTypes.string.isRequired,
+		author: PropTypes.string.isRequired,
+		link: PropTypes.string.isRequired,
+		available: PropTypes.bool.isRequired,
+		edited: PropTypes.bool.isRequired,
+	}).isRequired,
+	updateBook: PropTypes.func.isRequired,
+};
 
 export default CSSModules(BookView, styles, { allowMultiple: true });

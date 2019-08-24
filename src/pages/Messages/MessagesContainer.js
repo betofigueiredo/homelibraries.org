@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -13,14 +14,11 @@ import Messages from './Messages';
 class MessagesContainer extends Component {
 	state = {};
 
-	// componentDidMount() {
-	// 	document.title = 'Meus livros - Home Libraries';
-	// 	const { getMyMessages } = this.props;
-	// 	getMyMessages('/messages/mybooks', {});
-	// }
-
 	componentDidMount() {
-		console.log(this.props);
+		document.title = 'Meus livros - Home Libraries';
+		const { match, getMessages } = this.props;
+		const uuid = match.params.uuid || '';
+		getMessages(`/messages/${uuid}`, {});
 	}
 
 	render() {
@@ -45,6 +43,7 @@ MessagesContainer.propTypes = {
 	// =========== store
 	user: PropTypes.object.isRequired,
 	// =========== funcs
+	getMessages: PropTypes.func.isRequired,
 	// =========== router
 	match: PropTypes.object.isRequired,
 };

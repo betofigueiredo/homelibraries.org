@@ -7,7 +7,7 @@ import './styles/foundation/foundation.scss';
 import './styles/app.scss';
 
 import Auxlr from './hocs/Auxlr';
-import Routes from './Routes';
+import Routes from './routes';
 import * as serviceWorker from './serviceWorker';
 
 const app = (
