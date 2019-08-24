@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { buildMapStateToProps, buildmapDispatchToProps } from '../../store/reduxDispatchs';
+import { connect, useSelector } from 'react-redux';
+import { detailedmapDispatchToProps } from '../../store/reduxDispatchs';
 
 // Redux HOC
 import withStore from '../../store/withStore';
@@ -10,52 +10,46 @@ import withStore from '../../store/withStore';
 import LayoutWrapper from '../../components/LayoutWrapper';
 import MyBooks from './MyBooks';
 
-class MyBooksContainer extends Component {
-	componentDidMount() {
+function MyBooksContainer({
+	getMyBooks,
+	match,
+	updateBook,
+	updateMyBooksRaw,
+}) {
+	const mybooks = useSelector(store => store.mybooks);
+	const user = useSelector(store => store.user);
+
+	const { fetching } = mybooks;
+
+	useEffect(() => {
 		document.title = 'Meus livros - Home Libraries';
-		const { getMyBooks } = this.props;
 		getMyBooks('/books/mybooks', {});
-	}
+	}, []);
 
-	render() {
-		const {
-			mybooks,
-			user,
-			match,
-			updateBook,
-			updateMyBooksRaw,
-		} = this.props;
-		const { fetching } = mybooks;
+	return (
+		<LayoutWrapper
+			fetching={fetching}
+			user={user}
+			match={match}>
 
-		return (
-			<LayoutWrapper
-				fetching={fetching}
-				user={user}
-				match={match}>
+			<MyBooks
+				mybooks={mybooks}
+				updateBook={updateBook}
+				updateMyBooksRaw={updateMyBooksRaw} />
 
-				<MyBooks
-					mybooks={mybooks}
-					updateBook={updateBook}
-					updateMyBooksRaw={updateMyBooksRaw} />
-
-			</LayoutWrapper>
-		);
-	}
+		</LayoutWrapper>
+	);
 }
 
 MyBooksContainer.propTypes = {
-	// =========== store
-	mybooks: PropTypes.object.isRequired,
-	user: PropTypes.object.isRequired,
 	// =========== funcs
 	getMyBooks: PropTypes.func.isRequired,
 	updateBook: PropTypes.func.isRequired,
 	updateMyBooksRaw: PropTypes.func.isRequired,
 	// =========== router
 	match: PropTypes.object.isRequired,
-	// history: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (props) => buildMapStateToProps(props);
-const mapDispatchToProps = (dispatch) => buildmapDispatchToProps(dispatch);
-export default withStore(connect(mapStateToProps, mapDispatchToProps)(MyBooksContainer));
+const dispach_picks = ['getMyBooks', 'updateBook', 'updateMyBooksRaw'];
+const mapDispatchToProps = (dispatch) => detailedmapDispatchToProps(dispatch, dispach_picks);
+export default withStore(connect(null, mapDispatchToProps)(MyBooksContainer));
