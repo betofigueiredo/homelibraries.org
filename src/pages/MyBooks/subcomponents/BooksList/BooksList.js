@@ -8,7 +8,12 @@ import styles from './style.module.sass';
 // Components
 import Book from '../Book/Book';
 
-const BooksList = ({ mybooks, updateBook, updateMyBooksRaw }) => {
+// MYBOOKS_REQUESTED
+function BooksList({
+	mybooks,
+	updateBook,
+	updateMyBooksRaw,
+}) {
 	const { by_id, all_ids } = mybooks;
 
 	return (
@@ -23,7 +28,7 @@ const BooksList = ({ mybooks, updateBook, updateMyBooksRaw }) => {
 			))}
 		</>
 	);
-};
+}
 
 BooksList.propTypes = {
 	mybooks: PropTypes.object.isRequired,

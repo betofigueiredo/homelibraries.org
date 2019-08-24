@@ -8,7 +8,7 @@ import styles from './style.module.sass';
 // Components
 import AddBookForm from './subcomponents/AddBookForm/AddBookForm';
 import NoBooks from './subcomponents/NoBooks/NoBooks';
-import BooksList from './subcomponents/BooksList/BooksList';
+import BooksList from './subcomponents/BooksList';
 
 const MyBooks = ({
 	// =========== state

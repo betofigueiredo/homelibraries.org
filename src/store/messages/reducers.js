@@ -1,19 +1,12 @@
 import update from 'immutability-helper';
 import messages from './store';
-import {
-	UPDATE_MESSAGES,
-	UPDATE_MESSAGES_RAW,
-	MESSAGES_REQUESTED,
-	MESSAGES_RECEIVED,
-	MESSAGES_REQUEST_FAILED,
-} from './types';
 
 // Functions
 import { buildMessages } from './utils';
 
 const reducer = (state = messages, action) => {
 	switch (action.type) {
-	case UPDATE_MESSAGES: {
+	case 'UPDATE_MESSAGES': {
 		switch (action.field.length) {
 		case 1:
 			return update(state, {
@@ -30,7 +23,7 @@ const reducer = (state = messages, action) => {
 		}
 	}
 
-	case UPDATE_MESSAGES_RAW: {
+	case 'UPDATE_MESSAGES_RAW': {
 		const all_fields = Object.keys(action.fields_n_values)
 			.reduce((result, current) => ({
 				...result,
@@ -39,14 +32,14 @@ const reducer = (state = messages, action) => {
 		return update(state, all_fields);
 	}
 
-	case MESSAGES_REQUESTED: {
+	case 'MESSAGES_REQUESTED': {
 		return {
 			...state,
 			fetching: 10,
 		};
 	}
 
-	case MESSAGES_RECEIVED: {
+	case 'MESSAGES_RECEIVED': {
 		const data = action.payload.data || [];
 		const byid_and_allids = buildMessages(data);
 		return {
@@ -57,7 +50,7 @@ const reducer = (state = messages, action) => {
 		};
 	}
 
-	case MESSAGES_REQUEST_FAILED: {
+	case 'MESSAGES_REQUEST_FAILED': {
 		return {
 			...state,
 			fetching: 30,

@@ -1,13 +1,5 @@
 import update from 'immutability-helper';
 import mybooks from './store';
-import {
-	UPDATE_MYBOOKS,
-	UPDATE_MYBOOKS_RAW,
-	UPDATE_BOOK,
-	FETCH_REQUESTED,
-	FETCH_SUCCEEDED,
-	FETCH_FAILED,
-} from './types';
 
 // Functions
 import { buildMyBooks } from './utils';
@@ -15,7 +7,7 @@ import { logoffUser } from '../../functions/logoffUser';
 
 const reducer = (state = mybooks, action) => {
 	switch (action.type) {
-	case UPDATE_MYBOOKS: {
+	case 'UPDATE_MYBOOKS': {
 		switch (action.field.length) {
 		case 1:
 			return update(state, {
@@ -32,7 +24,7 @@ const reducer = (state = mybooks, action) => {
 		}
 	}
 
-	case UPDATE_MYBOOKS_RAW: {
+	case 'UPDATE_MYBOOKS_RAW': {
 		const all_fields = Object.keys(action.fields_n_values)
 			.reduce((result, current) => ({
 				...result,
@@ -41,7 +33,7 @@ const reducer = (state = mybooks, action) => {
 		return update(state, all_fields);
 	}
 
-	case UPDATE_BOOK: {
+	case 'UPDATE_BOOK': {
 		const book = {
 			...state.by_id[action.book_id],
 			...action.fields_n_values,
@@ -53,14 +45,14 @@ const reducer = (state = mybooks, action) => {
 		return update(state, { by_id: { $set: by_id } });
 	}
 
-	case FETCH_REQUESTED: {
+	case 'MYBOOKS_REQUESTED': {
 		return {
 			...state,
 			fetching: 10,
 		};
 	}
 
-	case FETCH_SUCCEEDED: {
+	case 'MYBOOKS_RECEIVED': {
 		const books = action.payload.data || [];
 		const books_byid_and_allids = buildMyBooks(books);
 		return {
@@ -71,7 +63,7 @@ const reducer = (state = mybooks, action) => {
 		};
 	}
 
-	case FETCH_FAILED: {
+	case 'MYBOOKS_REQUEST_FAILED': {
 		const not_logged = action.status === 403;
 		const fetching = not_logged ? 40 : 30;
 		if (not_logged) logoffUser();

@@ -12,42 +12,34 @@ import MyBooks from './MyBooks';
 
 function MyBooksContainer({
 	getMyBooks,
-	match,
 	updateBook,
 	updateMyBooksRaw,
 }) {
 	const mybooks = useSelector(store => store.mybooks);
-	const user = useSelector(store => store.user);
 
 	const { fetching } = mybooks;
 
 	useEffect(() => {
 		document.title = 'Meus livros - Home Libraries';
-		getMyBooks('/books/mybooks', {});
+		getMyBooks();
+		// on unmount
+		return () => updateMyBooksRaw({ fetching: 0 });
 	}, []);
 
 	return (
-		<LayoutWrapper
-			fetching={fetching}
-			user={user}
-			match={match}>
-
+		<LayoutWrapper fetching={fetching}>
 			<MyBooks
 				mybooks={mybooks}
 				updateBook={updateBook}
 				updateMyBooksRaw={updateMyBooksRaw} />
-
 		</LayoutWrapper>
 	);
 }
 
 MyBooksContainer.propTypes = {
-	// =========== funcs
 	getMyBooks: PropTypes.func.isRequired,
 	updateBook: PropTypes.func.isRequired,
 	updateMyBooksRaw: PropTypes.func.isRequired,
-	// =========== router
-	match: PropTypes.object.isRequired,
 };
 
 const dispach_picks = ['getMyBooks', 'updateBook', 'updateMyBooksRaw'];

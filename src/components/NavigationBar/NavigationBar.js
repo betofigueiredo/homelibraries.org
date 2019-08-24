@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
 // CSS
 import CSSModules from 'react-css-modules';
 import styles from './style.module.scss';
 
-/**
- * @render react
- * @name NavigationBar
- * @description Menu principal
- * @example
- */
+// Redux HOC
+import withStore from '../../store/withStore';
 
 // Language
 // import { translate } from '../../languages/translate';
@@ -19,7 +16,13 @@ import styles from './style.module.scss';
 // Components
 import NavButton from './NavButton';
 
-const NavigationBar = ({ match }) => {
+function NavigationBar({ match }) {
+	const user = useSelector(store => store.user);
+	const { locale } = user;
+	// TODO console.log
+	// eslint-disable-next-line no-console
+	console.log(locale);
+
 	const libraries_matches = ['/libraries'];
 	const mybooks_matches = ['/mybooks'];
 	const messages_matches = ['/messages'];
@@ -74,15 +77,11 @@ const NavigationBar = ({ match }) => {
 			</ul>
 		</div>
 	);
-};
+}
 
 NavigationBar.propTypes = {
 	match: PropTypes.object.isRequired,
-	// locale: PropTypes.string.isRequired,
 };
 
-// NavigationBar.defaultProps = {
-// 	route_path: '',
-// };
-
-export default withRouter(CSSModules(NavigationBar, styles, { allowMultiple: true }));
+const _NavigationBar = withRouter(CSSModules(NavigationBar, styles, { allowMultiple: true }));
+export default withStore(connect(null, null)(_NavigationBar));

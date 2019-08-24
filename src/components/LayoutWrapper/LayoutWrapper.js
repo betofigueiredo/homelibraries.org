@@ -10,15 +10,10 @@ import styles from './style.module.scss';
 import LoadingPage from '../_loadings/LoadingPage/LoadingPage';
 import NavigationBar from '../NavigationBar/NavigationBar';
 
-/* eslint-disable */
 const LayoutWrapper = ({
 	fetching,
-	user,
-	match,
 	children,
 }) => {
-	const { locale } = user;
-
 	switch (fetching) {
 	/* ========================================================================== *\
 			Render
@@ -27,9 +22,7 @@ const LayoutWrapper = ({
 	default: {
 		return (
 			<div styleName="page-wrapper">
-				<NavigationBar
-					route_path={match.path}
-					locale={locale} />
+				<NavigationBar />
 				{React.cloneElement(children)}
 			</div>
 		);
@@ -42,9 +35,7 @@ const LayoutWrapper = ({
 	case 10:
 		return (
 			<div styleName="page-wrapper">
-				<NavigationBar
-					route_path={match.path}
-					locale={locale} />
+				<NavigationBar />
 				<LoadingPage />
 			</div>
 		);
@@ -55,9 +46,7 @@ const LayoutWrapper = ({
 	case 30:
 		return (
 			<div styleName="page-wrapper">
-				<NavigationBar
-					route_path={match.path}
-					locale={locale} />
+				<NavigationBar />
 				<div className="container" style={{ marginTop: '36px' }}>
 					<div className="row">
 						<div className="col-sm-12" styleName="error-wrapper">
