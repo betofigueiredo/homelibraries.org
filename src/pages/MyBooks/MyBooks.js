@@ -11,18 +11,15 @@ import AddBookForm from './subcomponents/AddBookForm/AddBookForm';
 import NoBooks from './subcomponents/NoBooks/NoBooks';
 import BooksList from './subcomponents/BooksList/BooksList';
 
-/* eslint-disable */
 const MyBooks = ({
 	// =========== state
 	// =========== props
 	mybooks,
-	user,
 	// =========== local funcs
 	// =========== props funcs
 	updateBook,
 	updateMyBooksRaw,
 }) => {
-	const { logged } = user;
 	const { fetching, all_ids } = mybooks;
 
 	if (fetching === 40) {
@@ -60,8 +57,11 @@ const MyBooks = ({
 MyBooks.propTypes = {
 	// =========== state
 	// =========== props
-	mybooks: PropTypes.object.isRequired,
-	user: PropTypes.object.isRequired,
+	// mybooks: PropTypes.object.isRequired,
+	mybooks: PropTypes.shape({
+		fetching: PropTypes.number.isRequired,
+		all_ids: PropTypes.array.isRequired,
+	}).isRequired,
 	// =========== local funcs
 	// =========== props funcs
 	updateBook: PropTypes.func.isRequired,
