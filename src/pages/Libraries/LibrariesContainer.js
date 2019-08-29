@@ -1,96 +1,98 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import React, { Component } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { buildMapStateToProps, buildmapDispatchToProps } from '../../store/reduxDispatchs';
+import CSSModules from 'react-css-modules';
+import { connect, useSelector, useDispatch } from 'react-redux';
+import { detailedmapDispatchToProps } from '../../store/reduxDispatchs';
+
+// CSS
+import styles from './style.module.sass';
 
 // Redux HOC
 import withStore from '../../store/withStore';
 
 // Components
 import LayoutWrapper from '../../components/LayoutWrapper';
-import Libraries from './Libraries';
+import Map from '../../components/Map';
+import ProfilePreview from '../../components/ProfilePreview';
+import Search from '../../components/Search';
 
-// Functions
-// import { _get } from '../../functions/_requests';
-// import { buildLibraries } from '../../store/libraries/utils';
+function Libraries({
+	getLibraries,
+	updateLibrariesRaw,
+	updateMapRaw,
+	updateSearchRaw,
+}) {
+	const dispatch = useDispatch();
+	const libraries = useSelector(store => store.libraries);
+	const map = useSelector(store => store.map);
+	const search = useSelector(store => store.search);
+	const { profile_preview_id, fetching } = libraries;
 
-class LibrariesContainer extends Component {
-	state = {
-		fetching: 0,
-	};
-
-	componentWillUnmount() {
+	useEffect(() => {
+		document.title = 'Home Libraries';
 		/**
 		 * Remove all markers to load new ones
 		 * on the next mount
 		 */
-		const { updateLibrariesRaw } = this.props;
-		updateLibrariesRaw({
-			by_id: {},
-			all_ids: [],
-			profile_preview_id: 0,
+		dispatch({
+			type: 'UPDATE_LIBRARIES_RAW',
+			fields_n_values: {
+				by_id: {},
+				all_ids: [],
+				profile_preview_id: 0,
+			},
 		});
-	}
+	}, []);
 
-	openSearch = () => {
-		const { updateSearchRaw } = this.props;
+	const openSearch = useCallback(() => {
 		updateSearchRaw({ open: true });
-	}
+	}, [dispatch]);
 
-	// receiveLatLng = (lat, lng) => {
-	// 	/**
-	// 	 * Wait for lat and lng to be set on the map
-	// 	 */
-	// 	const { updateLibrariesRaw } = this.props;
-	// 	updateLibrariesRaw({ all_ids: [] });
-	// 	this.requestLibraries(lat, lng);
-	// }
+	return (
+		<LayoutWrapper fetching={20}>
+			<div styleName="libraries-wrapper">
+				<button
+					type="button"
+					styleName="search-button"
+					onClick={openSearch}>
+					<i className="fa fa-search" aria-hidden="true" />
+				</button>
+				{search.open && (
+					<Search
+						search={search}
+						updateSearchRaw={updateSearchRaw}
+						getLibraries={getLibraries}
+						fetching={fetching}
+						updateLibrariesRaw={updateLibrariesRaw} />
+				)}
 
-	// requestLibraries(lat, lng) {
-	// 	const { radius } = this.props.libraries.search;
-	// 	const params = { lat, lng, radius };
-	// 	_get('/libraries/all', params).then(response => {
-	// 		const { updateLibrariesRaw } = this.props;
-	// 		const libs_byid_and_allids = buildLibraries(response.data);
-	// 		updateLibrariesRaw({
-	// 			by_id: libs_byid_and_allids[0],
-	// 			all_ids: libs_byid_and_allids[1],
-	// 		});
-	// 	}).catch(error => {
-	// 		console.log(error);
-	// 	});
-	// }
+				{profile_preview_id !== 0 && (
+					<ProfilePreview
+						updateLibrariesRaw={updateLibrariesRaw}
+						libraries={libraries} />
+				)}
 
-	render() {
-		return (
-			<LayoutWrapper
-				fetching={20}
-				{...this.props}>
-
-				<Libraries
-					{...this.state}
-					{...this.props}
-					openSearch={this.openSearch} />
-
-			</LayoutWrapper>
-		);
-	}
+				<Map
+					map_data={map}
+					getLibraries={getLibraries}
+					search={search}
+					draw_circle
+					libraries={libraries}
+					updateLibrariesRaw={updateLibrariesRaw}
+					updateMapRaw={updateMapRaw} />
+			</div>
+		</LayoutWrapper>
+	);
 }
 
-LibrariesContainer.propTypes = {
-	// =========== store
-	libraries: PropTypes.object.isRequired,
-	// =========== funcs
-	updateUserRaw: PropTypes.func.isRequired,
+Libraries.propTypes = {
+	getLibraries: PropTypes.func.isRequired,
 	updateLibrariesRaw: PropTypes.func.isRequired,
 	updateMapRaw: PropTypes.func.isRequired,
 	updateSearchRaw: PropTypes.func.isRequired,
-	// =========== router
-	// match: PropTypes.object.isRequired,
-	// history: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (props) => buildMapStateToProps(props);
-const mapDispatchToProps = (dispatch) => buildmapDispatchToProps(dispatch);
-export default withStore(connect(mapStateToProps, mapDispatchToProps)(LibrariesContainer));
+const dispach_picks = ['getLibraries', 'updateLibrariesRaw', 'updateMapRaw', 'updateSearchRaw'];
+const mapDispatchToProps = (dispatch) => detailedmapDispatchToProps(dispatch, dispach_picks);
+const withCSS = CSSModules(Libraries, styles, { allowMultiple: true });
+export default withStore(connect(null, mapDispatchToProps)(withCSS));

@@ -1,19 +1,12 @@
 import update from 'immutability-helper';
 import libraries from './store';
-import {
-	UPDATE_LIBRARIES,
-	UPDATE_LIBRARIES_RAW,
-	LIBRARIES_REQUESTED,
-	LIBRARIES_RECEIVED,
-	LIBRARIES_REQUEST_FAILED,
-} from './types';
 
 // Functions
 import { buildLibraries } from './utils';
 
 const reducer = (state = libraries, action) => {
 	switch (action.type) {
-	case UPDATE_LIBRARIES: {
+	case 'UPDATE_LIBRARIES': {
 		switch (action.field.length) {
 		case 1:
 			return update(state, {
@@ -30,7 +23,7 @@ const reducer = (state = libraries, action) => {
 		}
 	}
 
-	case UPDATE_LIBRARIES_RAW: {
+	case 'UPDATE_LIBRARIES_RAW': {
 		const all_fields = Object.keys(action.fields_n_values)
 			.reduce((result, current) => ({
 				...result,
@@ -39,7 +32,7 @@ const reducer = (state = libraries, action) => {
 		return update(state, all_fields);
 	}
 
-	case LIBRARIES_REQUESTED: {
+	case 'LIBRARIES_REQUESTED': {
 		return {
 			...state,
 			fetching: 10,
@@ -48,7 +41,7 @@ const reducer = (state = libraries, action) => {
 		};
 	}
 
-	case LIBRARIES_RECEIVED: {
+	case 'LIBRARIES_RECEIVED': {
 		const all_libraries = action.payload.data || [];
 		const byid_and_allids = buildLibraries(all_libraries);
 		return {
@@ -59,7 +52,7 @@ const reducer = (state = libraries, action) => {
 		};
 	}
 
-	case LIBRARIES_REQUEST_FAILED: {
+	case 'LIBRARIES_REQUEST_FAILED': {
 		return {
 			...state,
 			fetching: 30,

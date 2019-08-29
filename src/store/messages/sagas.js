@@ -1,11 +1,11 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 
 // Services
-import { _get } from '../../services/get';
+import { instance } from '../../services/instance';
 
-export function* fetchMessages(action) {
+export function* fetchMessages({ url = '' }) {
 	try {
-		const payload = yield call(() => _get(action.url, action.params));
+		const payload = yield call(instance.get, url);
 		yield put({ type: 'MESSAGES_RECEIVED', payload });
 	} catch (error) {
 		yield put({ type: 'MESSAGES_REQUEST_FAILED', error });

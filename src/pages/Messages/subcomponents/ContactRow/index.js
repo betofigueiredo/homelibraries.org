@@ -1,3 +1,1 @@
-import ContactRow from './ContactRow';
-
-export default ContactRow;
+export { default } from './ContactRow';

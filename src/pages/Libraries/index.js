@@ -1,3 +1,1 @@
-import LibrariesContainer from './LibrariesContainer';
-
-export default LibrariesContainer;
+export { default } from './LibrariesContainer';

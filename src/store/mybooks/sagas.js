@@ -1,11 +1,11 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 
 // Services
-import { _get } from '../../services/get';
+import { instance } from '../../services/instance';
 
-export function* fetchData() {
+export function* fetchMyBooks() {
 	try {
-		const payload = yield call(() => _get('/books/mybooks', {}));
+		const payload = yield call(instance.get, '/books/mybooks');
 		yield put({ type: 'MYBOOKS_RECEIVED', payload });
 	} catch (error) {
 		const { status } = (error || {}).response || {};
@@ -15,5 +15,5 @@ export function* fetchData() {
 
 // saga
 export default function* myBooksSaga() {
-	yield takeLatest(['MYBOOKS_REQUESTED'], fetchData);
+	yield takeLatest(['MYBOOKS_REQUESTED'], fetchMyBooks);
 }

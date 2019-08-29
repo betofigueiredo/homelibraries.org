@@ -1,3 +1,1 @@
-import MyBooksContainer from './MyBooksContainer';
-
-export default MyBooksContainer;
+export { default } from './MyBooks';
