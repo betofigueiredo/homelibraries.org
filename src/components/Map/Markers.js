@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import styles from './style.module.sass';
 
-/* eslint-disable */
 class Markers extends Component {
 	state = {
 		markers: [],

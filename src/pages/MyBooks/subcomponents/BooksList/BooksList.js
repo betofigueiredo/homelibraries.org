@@ -6,7 +6,7 @@ import CSSModules from 'react-css-modules';
 import styles from './style.module.sass';
 
 // Components
-import Book from '../Book/Book';
+import Book from '../Book';
 
 // MYBOOKS_REQUESTED
 function BooksList({

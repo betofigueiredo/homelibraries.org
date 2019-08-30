@@ -1,3 +1,1 @@
-import LayoutWrapper from './LayoutWrapper';
-
-export default LayoutWrapper;
+export { default } from './LayoutWrapper';

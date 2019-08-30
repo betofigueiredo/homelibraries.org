@@ -6,7 +6,7 @@ import CSSModules from 'react-css-modules';
 import styles from './style.module.sass';
 
 // Components
-import BookEdition from '../BookEdition/BookEdition';
+import BookEdition from '../BookEdition';
 
 class AddBookForm extends Component {
 	state = {

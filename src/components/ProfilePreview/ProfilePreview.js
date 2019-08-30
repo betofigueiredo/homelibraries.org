@@ -7,7 +7,7 @@ import styles from './style.module.sass';
 
 // Components
 import SideBar from '../SideBar';
-import BookView from '../BookView/BookView';
+import BookView from '../BookView';
 
 // Functions
 import { _get } from '../../functions/_requests';

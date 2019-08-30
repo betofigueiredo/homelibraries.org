@@ -11,7 +11,7 @@ import withStore from '../../store/withStore';
 
 // Components
 import LayoutWrapper from '../../components/LayoutWrapper';
-import ContactsList from './subcomponents/ContactsList';
+import MessagesList from './subcomponents/MessagesList';
 import Chat from './subcomponents/Chat';
 
 function Messages({ match }) {
@@ -20,16 +20,19 @@ function Messages({ match }) {
 	useEffect(() => {
 		document.title = 'Mensagens - Home Libraries';
 		const uuid = match.params.uuid || '';
+		const url = uuid === ''
+			? '/messages/all'
+			: `/message/${uuid}`;
 		dispatch({
 			type: 'MESSAGES_REQUESTED',
-			url: `/messages/${uuid}`,
+			url,
 		});
 	}, []);
 
 	return (
 		<LayoutWrapper fetching={20}>
 			<div styleName="messages-wrapper">
-				<ContactsList />
+				<MessagesList />
 				<Chat />
 			</div>
 		</LayoutWrapper>

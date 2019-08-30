@@ -12,8 +12,8 @@ import withStore from '../../store/withStore';
 
 // Components
 import LayoutWrapper from '../../components/LayoutWrapper';
-import AddBookForm from './subcomponents/AddBookForm/AddBookForm';
-import NoBooks from './subcomponents/NoBooks/NoBooks';
+import AddBookForm from './subcomponents/AddBookForm';
+import NoBooks from './subcomponents/NoBooks';
 import BooksList from './subcomponents/BooksList';
 
 function MyBooks({

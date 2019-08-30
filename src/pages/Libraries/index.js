@@ -1,1 +1,1 @@
-export { default } from './LibrariesContainer';
+export { default } from './Libraries';

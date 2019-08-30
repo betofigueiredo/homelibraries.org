@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// require('es6-promise').polyfill();
 
 // CSS
 import CSSModules from 'react-css-modules';

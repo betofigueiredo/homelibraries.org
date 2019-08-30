@@ -9,7 +9,7 @@ import styles from './style.module.sass';
 // Components
 // import ModalPortal from '../../../../components/_modals/ModalPortal/ModalPortal';
 // import ModalWrapperPortal from '../../../../components/_modals/ModalPortal/ModalWrapperPortal';
-import BookEdition from '../BookEdition/BookEdition';
+import BookEdition from '../BookEdition';
 import BookSVG from '../../../../components/_svgs/BookSVG';
 import Switchery from '../../../../components/Switchery/Switchery';
 import ToolTip from '../../../../components/ToolTip/ToolTip';
