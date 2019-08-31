@@ -25,7 +25,10 @@ function NavigationBar({ match }) {
 
 	const libraries_matches = ['/libraries'];
 	const mybooks_matches = ['/mybooks'];
-	const messages_matches = ['/messages'];
+	const messages_matches = [
+		'/messages',
+		'/messages/view/:uuid',
+	];
 	const account_matches = [
 		'/account',
 		'/account/name',
