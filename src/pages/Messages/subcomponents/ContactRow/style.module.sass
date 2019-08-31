@@ -7,11 +7,12 @@
 	margin: 0 auto 10px
 	padding: 18px 18px 19px 80px
 	background: #fff
-	border: 1px solid #e8ebed
+	border-top: 1px solid #e8ebed
+	border-bottom: 1px solid #e8ebed
 	text-align: left
 	color: #84949a
 	font-size: 14px
-	@include border-radius(8px)
+	// @include border-radius(8px)
 	// @include box-shadow(0 2px 18px rgba(54, 61, 74, 0.04))
 
 	> .picture
@@ -25,8 +26,10 @@
 		font-weight: 500
 		color: #000
 
-
-
+	> .message
+		text-overflow: ellipsis
+		white-space: nowrap
+		overflow: hidden
 
 
 

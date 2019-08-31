@@ -1,41 +1,35 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // CSS
 import CSSModules from 'react-css-modules';
 import styles from './style.module.sass';
 
-// Components
-// import InputText from '../../../../components/_inputs/InputText/InputText';
-// import Button from '../../../../components/Button/Button';
-// import BookSVG from '../../../../components/_svgs/BookSVG';
+function ContactRow({ contact_message }) {
+	const { message, user } = contact_message;
 
-// Functions
-// import { _post } from '../../../../functions/_requests';
-
-class ContactRow extends Component {
-	state = {};
-
-	render() {
-		const { contact } = this.props;
-		console.log(contact);
-
-		return (
-			<div styleName="contact-card" data-test="component-contactrow">
-				<div styleName="picture">.</div>
-				<div styleName="nome">Beto Figueiredo</div>
-				Last message from...
-			</div>
-		);
-	}
+	return (
+		<div styleName="contact-card" data-test="component-contactrow">
+			<div styleName="picture">.</div>
+			<div styleName="nome">{user.name}</div>
+			<div styleName="message">{message}</div>
+		</div>
+	);
 }
 
 ContactRow.propTypes = {
-	contact: PropTypes.object,
-};
-
-ContactRow.defaultProps = {
-	contact: {},
+	contact_message: PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		id_book: PropTypes.number.isRequired,
+		is_read: PropTypes.bool.isRequired,
+		latest_update: PropTypes.string.isRequired,
+		message: PropTypes.string.isRequired,
+		user: PropTypes.shape({
+			color: PropTypes.string.isRequired,
+			name: PropTypes.string.isRequired,
+			uuid: PropTypes.string.isRequired,
+		}).isRequired,
+	}).isRequired,
 };
 
 export default CSSModules(ContactRow, styles, { allowMultiple: true });

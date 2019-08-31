@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 
 // CSS
 import styles from './style.module.sass';
@@ -11,29 +11,30 @@ import withStore from '../../store/withStore';
 
 // Components
 import LayoutWrapper from '../../components/LayoutWrapper';
+import NotLogged from '../../components/NotLogged';
 import MessagesList from './subcomponents/MessagesList';
-import Chat from './subcomponents/Chat';
+import Conversation from './subcomponents/Conversation';
 
 function Messages({ match }) {
-	const dispatch = useDispatch();
+	const messages = useSelector(store => store.messages);
+	const { fetching } = messages;
 
 	useEffect(() => {
 		document.title = 'Mensagens - Home Libraries';
-		const uuid = match.params.uuid || '';
-		const url = uuid === ''
-			? '/messages/all'
-			: `/message/${uuid}`;
-		dispatch({
-			type: 'MESSAGES_REQUESTED',
-			url,
-		});
 	}, []);
+
+	if (
+		fetching.all_messages === 40
+		|| fetching.conversation === 40
+	) {
+		return <NotLogged />;
+	}
 
 	return (
 		<LayoutWrapper fetching={20}>
 			<div styleName="messages-wrapper">
 				<MessagesList />
-				<Chat />
+				<Conversation match={match} />
 			</div>
 		</LayoutWrapper>
 	);

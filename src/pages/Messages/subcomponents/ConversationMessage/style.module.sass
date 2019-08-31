@@ -1,0 +1,25 @@
+@import "../../../../styles/global_variables.scss"
+
+.message-wrapper
+	position: relative
+	float: left
+	width: 100%
+	margin: 12px 0
+
+	> .message
+		float: left
+		width: 60%
+		padding: 11px 19px
+		background: #fff
+		font-size: 14px
+		@include border-radius(18px)
+		border-bottom-left-radius: 0
+		@include box-shadow(0 1px 1px 0px rgba(0, 0, 0, 0.12))
+
+		&.mine
+			float: right
+			background: #4cc5d7
+			color: #fff
+			@include border-radius(18px)
+			border-bottom-right-radius: 0
+			@include box-shadow(none)

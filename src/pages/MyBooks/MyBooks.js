@@ -12,6 +12,7 @@ import withStore from '../../store/withStore';
 
 // Components
 import LayoutWrapper from '../../components/LayoutWrapper';
+import NotLogged from '../../components/NotLogged';
 import AddBookForm from './subcomponents/AddBookForm';
 import NoBooks from './subcomponents/NoBooks';
 import BooksList from './subcomponents/BooksList';
@@ -28,15 +29,13 @@ function MyBooks({
 		document.title = 'Meus livros - Home Libraries';
 		dispatch({ type: 'MYBOOKS_REQUESTED' });
 		// on unmount
-		return () => updateMyBooksRaw({ fetching: 0 });
+		return function cleanup() {
+			updateMyBooksRaw({ fetching: 0 });
+		};
 	}, []);
 
 	if (fetching === 40) {
-		return (
-			<LayoutWrapper fetching={fetching}>
-				<p>not logged</p>
-			</LayoutWrapper>
-		);
+		return <NotLogged />;
 	}
 
 	return (

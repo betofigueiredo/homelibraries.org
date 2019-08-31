@@ -10,6 +10,6 @@ jest.mock('react-css-modules', () => ContactRow => ContactRow);
 test('ContactRow render ok', () => {
 	const wrapper = shallow(<ContactRow />);
 	expect(
-		wrapper.find('[data-test="component-contactrow2222"]').length
+		wrapper.find('[data-test="component-contactrow"]').length
 	).toBe(1);
 });
