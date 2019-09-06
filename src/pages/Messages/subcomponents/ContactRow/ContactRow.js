@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 // CSS
 import CSSModules from 'react-css-modules';
@@ -7,13 +8,19 @@ import styles from './style.module.sass';
 
 function ContactRow({ contact_message }) {
 	const { message, user } = contact_message;
+	const user_uuid = (user || {}).uuid || '';
+	const link = user_uuid !== ''
+		? `/messages/view/${user_uuid}`
+		: '/messages';
 
 	return (
-		<div styleName="contact-card" data-test="component-contactrow">
-			<div styleName="picture">.</div>
-			<div styleName="nome">{user.name}</div>
-			<div styleName="message">{message}</div>
-		</div>
+		<Link to={link}>
+			<div styleName="contact-card" data-test="component-contactrow">
+				<div styleName="picture">.</div>
+				<div styleName="nome">{user.name}</div>
+				<div styleName="message">{message}</div>
+			</div>
+		</Link>
 	);
 }
 
