@@ -11,6 +11,7 @@ import styles from './style.module.sass';
 
 // Components
 import ConversationMessage from '../ConversationMessage';
+import ConversationReply from '../ConversationReply';
 
 function Conversation({ match }) {
 	const dispatch = useDispatch();
@@ -74,6 +75,9 @@ function Conversation({ match }) {
 	return (
 		<div styleName="chat-wrapper" data-test="component-conversation">
 			<div className="grid-container" styleName="smaller-grid-container">
+				{uuid !== '' && (
+					<ConversationReply />
+				)}
 				<div className="grid-x grid-padding-x">
 					<div className="small-12 cell">
 						<h3>Meus livros</h3>
