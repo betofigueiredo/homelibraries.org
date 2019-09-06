@@ -24,9 +24,9 @@ function Conversation({ match }) {
 		by_id,
 		all_ids,
 	} = conversation;
+	const uuid = match.params.uuid || '';
 
 	useEffect(() => {
-		const uuid = match.params.uuid || '';
 		if (uuid !== '') {
 			dispatch({
 				type: 'CONVERSATION_REQUESTED',
@@ -34,12 +34,26 @@ function Conversation({ match }) {
 			});
 			return;
 		}
-		dispatch({
-			type: 'UPDATE_MESSAGES',
-			field: ['fetching', 'conversation'],
-			value: 20,
-		});
-	}, []);
+
+		function resetConversation() {
+			dispatch({
+				type: 'UPDATE_MESSAGES_RAW',
+				fields_n_values: {
+					fetching: {
+						...messages.fetching,
+						conversation: 20,
+					},
+					conversation: {
+						uuid: '',
+						by_id: {},
+						all_ids: [],
+					},
+				},
+				value: 20,
+			});
+		}
+		resetConversation();
+	}, [uuid]);
 
 	if (fetching.conversation === 10) {
 		return (
