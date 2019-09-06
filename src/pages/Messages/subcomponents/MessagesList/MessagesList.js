@@ -55,9 +55,5 @@ function MessagesList() {
 // 	mybooks: PropTypes.object.isRequired,
 // };
 
-// MessagesList.defaultProps = {
-// 	contact: {},
-// };
-
 const withCSS = CSSModules(MessagesList, styles, { allowMultiple: true });
 export default withStore(connect()(withCSS));
