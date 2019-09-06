@@ -47,7 +47,7 @@ Button.propTypes = {
 Button.defaultProps = {
 	className: 'button',
 	onClick: () => {},
-	loading: true,
+	loading: 0,
 };
 
 export default CSSModules(Button, styles, { allowMultiple: true });
