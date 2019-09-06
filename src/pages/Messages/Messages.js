@@ -23,10 +23,12 @@ function Messages({ match }) {
 		document.title = 'Mensagens - Home Libraries';
 	}, []);
 
-	if (
+	const user_not_logged = (
 		fetching.all_messages === 40
 		|| fetching.conversation === 40
-	) {
+	);
+
+	if (user_not_logged) {
 		return <NotLogged />;
 	}
 
