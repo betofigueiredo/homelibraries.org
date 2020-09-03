@@ -1,0 +1,43 @@
+type AuthPayload {
+	id: ID! @id
+	token: String
+	user: User
+}
+
+type User {
+	id: ID! @id
+	email: String! @unique
+	password: String!
+	name: String!
+	username: String @default(value: "")
+	color: String @default(value: "")
+	about: String @default(value: "")
+	address: String @default(value: "")
+	lat: Float @default(value: 0)
+	lng: Float @default(value: 0)
+	lfl: String @default(value: "")
+	language: String @default(value: "pt-br")
+	books: [Book]
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
+}
+
+type Book {
+	id: ID! @id
+	owner: User! @relation(link: INLINE)
+	title: String!
+	author: String!
+	link: String @default(value: "")
+	available: Boolean @default(value: true)
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
+}
+
+type Borrowing {
+	id: ID! @id
+	owner: User! @relation(name: "OwnerRelation")
+	reader: User! @relation(name: "ReaderRelation")
+	book: Book! @relation(link: INLINE)
+	returnedAt: DateTime
+	createdAt: DateTime! @createdAt
+}

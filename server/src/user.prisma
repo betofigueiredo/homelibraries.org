@@ -1,0 +1,23 @@
+type AuthPayload {
+	id: ID! @id
+	token: String
+	user: User
+}
+
+type User {
+	id: ID! @id
+	email: String @unique
+	password: String!
+	name: String!
+	username: String @default(value: "")
+	color: String @default(value: "")
+	about: String @default(value: "")
+	address: String @default(value: "")
+	lat: String @default(value: "")
+	lng: String @default(value: "")
+	lfl: String @default(value: "")
+	language: String @default(value: "pt-br")
+	books: [Book]
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
+}

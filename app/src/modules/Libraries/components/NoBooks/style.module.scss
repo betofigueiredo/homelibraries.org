@@ -1,0 +1,59 @@
+@import "../../../../styles/global_variables.scss";
+
+.libraries-map {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	border: none;
+	border-bottom: $navigation_bar_mobile * 1px solid transparent; }
+
+
+/* ================================================================== *\
+
+
+		@media (min-width: 768px) and (max-width: 1024px) {
+
+    #Small devices (tablets, 768px and up)
+
+
+
+\* ================================================================== */ @media (min-width: 768px) {
+
+
+.libraries-map {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	border: none;
+	border-left: $navigation_bar * 1px solid transparent; }
+
+
+/* ================================================================== *\
+
+
+
+    #Medium devices (desktops, 992px and up)
+
+
+
+\* ================================================================== */ } @media (min-width: 992px) {
+
+
+
+
+
+/* ================================================================== *\
+
+
+
+		#Large devices (large desktops, 1200px and up)
+
+
+
+\* ================================================================== */ } @media (min-width: 1200px) {
+
+
+
+
+
+/* ================================================================== */ } /* END devices */

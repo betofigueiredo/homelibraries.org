@@ -1,0 +1,46 @@
+type Query {
+  publishedPosts: [Post!]!
+  post(postId: ID!): Post
+  postsByUser(userId: ID!): [Post!]!
+  books: [Book!]!
+  booksByLibrary(libraryId: ID!): [Book!]!
+  users: [User!]!
+  libraries: [Library!]!
+}
+
+type Mutation {
+  createUser(name: String!): User
+  createDraft(title: String!, userId: ID!): Post
+  publish(postId: ID!): Post
+  createLibrary(name: String!): Library
+  createBook(title: String!, author: String!, libraryId: ID!): Book
+}
+
+type User {
+  id: ID!
+  email: String
+  name: String!
+  posts: [Post!]!
+}
+
+type Post {
+  id: ID!
+  title: String!
+  published: Boolean!
+  author: User
+}
+
+type Library {
+  id: ID!
+  name: String!
+  books: [Book!]!
+}
+
+type Book {
+  id: ID!
+  owner: Library
+  title: String!
+  author: String!
+  link: String
+  available: Boolean!
+}

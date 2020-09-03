@@ -1,0 +1,101 @@
+scalar DateTime
+
+type AuthPayload {
+	id: ID!
+	token: String
+	user: User
+}
+
+type User {
+	id: ID!
+	email: String!
+	password: String!
+	name: String!
+	username: String
+	color: String
+	about: String
+	address: String
+	lat: Float
+	lng: Float
+	lfl: String
+	language: String
+	books: [Book]
+	createdAt: DateTime!
+	updatedAt: DateTime!
+}
+
+type Book {
+	id: ID!
+	owner: User!
+	title: String!
+	author: String!
+	link: String
+	available: Boolean
+	createdAt: DateTime!
+	updatedAt: DateTime!
+}
+
+type Borrowing {
+	id: ID!
+	owner: User!
+	reader: User!
+	book: Book!
+	returnedAt: DateTime
+	createdAt: DateTime!
+}
+
+type Query {
+	booksByUser(userId: ID!): [Book]
+	users: [User!]!
+	searchUsersOnMap(
+		minlat: Float,
+		maxlat: Float,
+		minlng: Float,
+		maxlng: Float,
+		user_name: String,
+		book_or_author: String,
+	): [User!]!
+}
+
+type Mutation {
+	createUser(
+		email: String!
+		password: String!
+		name: String!
+	): User
+    # updateUser(
+	# 	userId: ID!
+	# 	email: String
+	# 	password: String
+	# 	name: String
+	# 	username: String
+	# 	about: String
+	# 	address: String
+	# 	lat: Float
+	# 	lng: Float
+	# 	lfl: String
+	# 	language: String
+	# ): User
+	signup(
+		email: String!
+		password: String!
+		name: String!
+	): AuthPayload
+	login(
+		email: String!
+		password: String!
+	): AuthPayload
+    createBook(
+		userId: ID!
+		title: String!
+		author: String!
+		link: String
+	): Book
+    updateBook(
+		bookId: ID!
+		title: String
+		author: String
+		link: String
+		available: Boolean
+	): Book
+}
