@@ -1,0 +1,102 @@
+{
+  "cat": {
+    "name": "Gorda"
+  },
+  "welcome": {
+    "en": "Welcome to the Book Library",
+    "pt": "Bem-vindo à Biblioteca de Livros"
+  },
+  "sections": [
+    {
+      "id": "thomas-sowell",
+      "title": {
+        "en": "Thomas Sowell",
+        "pt": "Thomas Sowell"
+      },
+      "subtitle": {
+        "en": "Economics, Political Science",
+        "pt": "Economia, Ciência Política"
+      },
+      "description": {
+        "en": "Thomas Sowell is an American economist and political commentator known for his work on economics, race, and social policy.",
+        "pt": "Thomas Sowell é um economista e comentarista político americano conhecido por seu trabalho em economia, raça e política social."
+      },
+      "books": [
+        {
+          "title": {
+            "en": "The Vision of the Anointed",
+            "pt": "Os Ungidos"
+          },
+          "author": "Thomas Sowell",
+          "description": {
+            "en": "In this book, Sowell critiques the intellectual elite and their influence on public policy, arguing that their well-intentioned but misguided ideas often lead to negative consequences.",
+            "pt": "Neste livro, Sowell critica a elite intelectual e sua influência na política pública, argumentando que suas ideias bem-intencionadas, mas equivocadas, muitas vezes levam a consequências negativas."
+          },
+          "image": {
+            "en": "https://m.media-amazon.com/images/I/81GP7-5oA0L._SY466_.jpg",
+            "pt": "https://m.media-amazon.com/images/I/714KlDkst5L._SL466_.jpg"
+          },
+          "link": {
+            "en": "https://www.amazon.com/Vision-Anointed-Self-Congratulation-Social-Policy/dp/046508995X/",
+            "pt": "https://www.amazon.com.br/Os-Ungidos-fantasia-pol%C3%ADticas-progressistas-ebook/dp/B0BP2SGRWC/"
+          }
+        }
+      ]
+    },
+    {
+      "id": "george-orwell",
+      "title": {
+        "en": "George Orwell",
+        "pt": "George Orwell"
+      },
+      "subtitle": {
+        "en": "Fiction, Political Satire",
+        "pt": "Ficção, Sátira Política"
+      },
+      "description": {
+        "en": "George Orwell was an English novelist and essayist whose work is marked by lucid prose, social criticism, and opposition to totalitarianism.",
+        "pt": "George Orwell foi um romancista e ensaísta inglês cuja obra é marcada pela prosa lúcida, crítica social e oposição ao totalitarismo."
+      },
+      "books": [
+        {
+          "title": {
+            "en": "1984",
+            "pt": "1984"
+          },
+          "author": "George Orwell",
+          "description": {
+            "en": "A dystopian novel about a totalitarian regime that watches everything and rewrites the past, and one man's quiet rebellion against it.",
+            "pt": "Um romance distópico sobre um regime totalitário que vigia tudo e reescreve o passado, e a rebelião silenciosa de um homem contra ele."
+          },
+          "image": {
+            "en": "https://m.media-amazon.com/images/I/71rpa1-kyvL._SY466_.jpg",
+            "pt": "https://m.media-amazon.com/images/I/819js3EQwbL._SY466_.jpg"
+          },
+          "link": {
+            "en": "https://www.amazon.com/1984-Signet-Classics-George-Orwell/dp/0451524934/",
+            "pt": "https://www.amazon.com.br/1984-George-Orwell/dp/8535914846/"
+          }
+        },
+        {
+          "title": {
+            "en": "Animal Farm",
+            "pt": "A Revolução dos Bichos"
+          },
+          "author": "George Orwell",
+          "description": {
+            "en": "A satirical fable in which farm animals overthrow their farmer, only to watch their revolution curdle into a new tyranny.",
+            "pt": "Uma fábula satírica em que os animais de uma fazenda derrubam o fazendeiro, apenas para ver sua revolução se transformar em uma nova tirania."
+          },
+          "image": {
+            "en": "https://m.media-amazon.com/images/I/71je3-DsQEL._SY466_.jpg",
+            "pt": "https://m.media-amazon.com/images/I/61La8-uAxSL._SY466_.jpg"
+          },
+          "link": {
+            "en": "https://www.amazon.com/Animal-Farm-George-Orwell/dp/0451526341/",
+            "pt": "https://www.amazon.com.br/revolu%C3%A7%C3%A3o-dos-bichos-fábula/dp/8535909559/"
+          }
+        }
+      ]
+    }
+  ]
+}
