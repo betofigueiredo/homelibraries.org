@@ -6,6 +6,7 @@ import { Instance, Instances } from '@react-three/drei'
 import { Bench, ShelfBody } from './Library'
 import { stoneTexture } from './textures'
 import { makeRng } from './rng'
+import { useGame } from './useGame'
 
 /**
  * One library "section": an open-air reading court in stone and wood. Two
@@ -46,14 +47,34 @@ function StoneWall({
   )
 }
 
-/** A stacked-stone pillar crowned by a glowing crystal — the section's lamp. */
+/** A stacked-stone pillar crowned by a glowing crystal — the section's lamp.
+ *  When the cat is inside the court the crystal flares up in greeting. */
 function CrystalPillar({
   position,
   height = 1.5,
+  active = false,
 }: {
   position: [number, number, number]
   height?: number
+  active?: boolean
 }) {
+  const crystalMat = useRef<THREE.MeshStandardMaterial>(null)
+  const light = useRef<THREE.PointLight>(null)
+
+  useFrame((state, delta) => {
+    const k = Math.min(1, delta * 3.5)
+    // A soft shimmer rides on top of the flare so the glow feels alive.
+    const shimmer = active ? Math.sin(state.clock.elapsedTime * 3.1) * 0.5 : 0
+    if (crystalMat.current) {
+      const target = (active ? 4.8 : 2.4) + shimmer
+      crystalMat.current.emissiveIntensity +=
+        (target - crystalMat.current.emissiveIntensity) * k
+    }
+    if (light.current) {
+      light.current.intensity += ((active ? 10 : 5) - light.current.intensity) * k
+    }
+  })
+
   return (
     <RigidBody type="fixed" colliders={false} position={position}>
       <CuboidCollider args={[0.3, height / 2, 0.3]} position={[0, height / 2, 0]} />
@@ -68,6 +89,7 @@ function CrystalPillar({
       <mesh position={[0, height + 0.24, 0]} rotation={[0, 0.6, 0]} scale={[1, 1.7, 1]}>
         <octahedronGeometry args={[0.16, 0]} />
         <meshStandardMaterial
+          ref={crystalMat}
           color={CRYSTAL}
           emissive={CRYSTAL_GLOW}
           emissiveIntensity={2.4}
@@ -77,6 +99,7 @@ function CrystalPillar({
         />
       </mesh>
       <pointLight
+        ref={light}
         position={[0, height + 0.35, 0]}
         intensity={5}
         distance={8}
@@ -254,15 +277,24 @@ function Fireflies({ count = 10, seed = 0 }: { count?: number; seed?: number }) 
   )
 }
 
-/** A few enchanted books circling lazily above the court. */
-function FloatingBooks({ position }: { position: [number, number, number] }) {
+/** A few enchanted books circling lazily above the court — they perk up and
+ *  spin faster while the cat is visiting. */
+function FloatingBooks({
+  position,
+  active = false,
+}: {
+  position: [number, number, number]
+  active?: boolean
+}) {
   const ring = useRef<THREE.Group>(null)
+  const speed = useRef(0.22)
   const colors = ['#8c3b3b', '#35566b', '#c9a24b']
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const t = state.clock.elapsedTime
     if (!ring.current) return
-    ring.current.rotation.y = t * 0.22
+    speed.current += ((active ? 0.75 : 0.22) - speed.current) * Math.min(1, delta * 2)
+    ring.current.rotation.y += speed.current * delta
     ring.current.children.forEach((b, i) => {
       b.position.y = Math.sin(t * 0.9 + i * 2.1) * 0.2
       b.rotation.z = Math.sin(t * 0.7 + i * 1.4) * 0.18
@@ -326,15 +358,20 @@ export function LibrarySection({
   position = [0, 0, 0],
   rotation = 0,
   title,
+  id,
   seed = 0,
 }: {
   position?: [number, number, number]
   rotation?: number
   title: string
+  /** Section id from data.json — lights the court up while the cat is in it. */
+  id?: string
   seed?: number
 }) {
   const floorTex = useMemo(() => stoneTexture(4.5, 4.5), [])
   const stones = useSteppingStones(seed)
+  // Re-renders only on enter/leave of this particular court.
+  const active = useGame((s) => id !== undefined && s.activeSectionId === id)
 
   return (
     <group position={position} rotation={[0, rotation, 0]}>
@@ -356,9 +393,9 @@ export function LibrarySection({
       <StoneWall position={[-4.2, 0, -1.2]} size={[0.45, 2.1, 5.4]} />
 
       {/* Glowing crystals guard the open ends of each wall */}
-      <CrystalPillar position={[4.35, 0, -3.7]} height={1.6} />
-      <CrystalPillar position={[-4.2, 0, 1.9]} height={1.6} />
-      <CrystalPillar position={[3.7, 0, 2.8]} height={1.1} />
+      <CrystalPillar position={[4.35, 0, -3.7]} height={1.6} active={active} />
+      <CrystalPillar position={[-4.2, 0, 1.9]} height={1.6} active={active} />
+      <CrystalPillar position={[3.7, 0, 2.8]} height={1.1} active={active} />
 
       {/* Shelves leaning on the walls */}
       <ShelfBody position={[-2.5, 0.04, -3.27]} seed={100 + seed} />
@@ -383,7 +420,7 @@ export function LibrarySection({
 
       {/* The magic */}
       <Fireflies seed={seed} />
-      <FloatingBooks position={[-0.3, 2.6, -1.2]} />
+      <FloatingBooks position={[-0.3, 2.6, -1.2]} active={active} />
     </group>
   )
 }

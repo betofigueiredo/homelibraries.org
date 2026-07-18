@@ -28,3 +28,170 @@ canvas {
   display: block;
   touch-action: none;
 }
+
+/* ------------------------------ Books panel ------------------------------- */
+
+/* The sheet rises softly out of the bottom edge… */
+@keyframes sheetIn {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0);
+  }
+}
+
+/* …and leaves even more softly (exits quieter than enters). */
+@keyframes sheetOut {
+  to {
+    opacity: 0;
+    translate: 0 18px;
+  }
+}
+
+/* Staggered entrance for each book cover and each text block. */
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    translate: 0 22px;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+    scale: 0.98;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+/* Tactile press feedback for buttons & links. */
+.btn-press {
+  transition-property: scale;
+  transition-duration: 160ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+.btn-press:active {
+  scale: 0.96;
+}
+
+/* A book on the shelf: tilted at rest, straightens and lifts on hover.
+   The tilt comes in via --tilt so the hover rule can override it. */
+.book-cover {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+  rotate: var(--tilt, 0deg);
+  transition-property: rotate, translate;
+  transition-duration: 240ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+.book-cover:hover,
+.book-cover:focus-visible {
+  rotate: 0deg;
+  translate: 0 -7px;
+}
+.book-cover:active {
+  translate: 0 -4px;
+}
+.book-cover img {
+  display: block;
+  width: 92px;
+  border-radius: 7px;
+  outline: 1px solid rgba(255, 255, 255, 0.12);
+  outline-offset: -1px;
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.4),
+    0 10px 26px rgba(0, 0, 0, 0.45);
+  transition-property: box-shadow;
+  transition-duration: 240ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+.book-cover:hover img,
+.book-cover:focus-visible img {
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.45),
+    0 18px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* The shelf: a snap-scrolling row of covers, scrollbar hidden — edge fades
+   and the chevrons communicate the overflow instead. */
+.book-shelf {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 10px 4px 4px; /* headroom so the hover lift never clips */
+  scroll-snap-type: x proximity;
+  scroll-padding-left: 4px;
+  scrollbar-width: none;
+}
+.book-shelf::-webkit-scrollbar {
+  display: none;
+}
+.book-shelf .book-cover {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Caption under each cover: title clamped to two lines, author to one. */
+.book-cover .cap-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  width: 92px;
+  margin-top: 8px;
+  font-size: 11px;
+  line-height: 1.3;
+  color: #e0d2b8;
+}
+.book-cover .cap-author {
+  display: block;
+  width: 92px;
+  margin-top: 2px;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  color: #8f8069;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.serif-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  text-wrap: balance;
+}
+
+.book-desc {
+  text-wrap: pretty;
+}
+

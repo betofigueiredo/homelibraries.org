@@ -324,6 +324,7 @@ export function Island() {
         return (
           <LibrarySection
             key={s.id}
+            id={s.id}
             position={[spot.x, 0, spot.z]}
             rotation={spot.rotation}
             title={s.title.en}

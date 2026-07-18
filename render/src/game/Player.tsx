@@ -9,6 +9,9 @@ import {
 import * as THREE from 'three'
 import { Controls } from './controls'
 import { Cat } from './Cat'
+import { SECTION_SPOTS } from './terrain'
+import { useGame } from './useGame'
+import data from '../data.json'
 
 const SPEED = 5
 const TURN_SPEED = 1.9 // rad/s — how fast the side keys orbit the camera
@@ -21,6 +24,10 @@ const CAMERA_HEIGHT = 4.8
 const CAT_RADIUS = 0.28
 const CAT_HALF = 0.1
 const FEET_OFFSET = -(CAT_HALF + CAT_RADIUS)
+// Court sensing: enter inside the flagstone circle (r = 5.4), leave a bit
+// beyond it — the hysteresis stops the book panel flickering on the rim.
+const COURT_ENTER_R = 5.2
+const COURT_EXIT_R = 6.4
 
 /** Rotate `current` angle toward `target` by `t`, taking the shortest path. */
 function lerpAngle(current: number, target: number, t: number) {
@@ -82,6 +89,22 @@ export function Player() {
         Math.min(1, delta * 10),
       )
     }
+
+    // Which reading court is the cat inside? Written to the store only on
+    // change, so the DOM book panel mounts/unmounts without per-frame churn.
+    const game = useGame.getState()
+    let inSection: string | null = null
+    for (let i = 0; i < SECTION_SPOTS.length; i++) {
+      const spot = SECTION_SPOTS[i]
+      const section = data.sections[i]
+      if (!section) continue
+      const r = game.activeSectionId === section.id ? COURT_EXIT_R : COURT_ENTER_R
+      if (Math.hypot(p.x - spot.x, p.z - spot.z) < r) {
+        inSection = section.id
+        break
+      }
+    }
+    if (inSection !== game.activeSectionId) game.setActiveSection(inSection)
 
     // Third-person follow camera, orbiting the cat at the current yaw.
     const pos = rb.translation()

@@ -40,6 +40,44 @@
             "en": "https://www.amazon.com/Vision-Anointed-Self-Congratulation-Social-Policy/dp/046508995X/",
             "pt": "https://www.amazon.com.br/Os-Ungidos-fantasia-pol%C3%ADticas-progressistas-ebook/dp/B0BP2SGRWC/"
           }
+        },
+        {
+          "title": {
+            "en": "Intellectuals and Society",
+            "pt": "Intelectuais e a sociedade"
+          },
+          "author": "Thomas Sowell",
+          "description": {
+            "en": "In this book, Sowell examines the role of intellectuals in society and their influence on public opinion and policy, arguing that they often promote ideas that are disconnected from reality.",
+            "pt": "Neste livro, Sowell examina o papel dos intelectuais na sociedade e sua influência na opinião pública e na política, argumentando que eles frequentemente promovem ideias que estão desconectadas da realidade."
+          },
+          "image": {
+            "en": "https://m.media-amazon.com/images/I/61e3L1G+NiL._SL466_.jpg",
+            "pt": "https://m.media-amazon.com/images/I/71nS0WxwEqL._SL466_.jpg"
+          },
+          "link": {
+            "en": "https://www.amazon.com/Intellectuals-Society-Thomas-Sowell/dp/0465025226/",
+            "pt": "https://www.amazon.com.br/Intelectuais-sociedade-impacto-desastroso-descoladas/dp/6559578380/"
+          }
+        },
+        {
+          "title": {
+            "en": "Our Culture, What's Left Of It",
+            "pt": "Nossa Cultura... Ou o que Restou Dela"
+          },
+          "author": "Theodore Dalrymple",
+          "description": {
+            "en": "",
+            "pt": ""
+          },
+          "image": {
+            "en": "https://m.media-amazon.com/images/I/41GRjpWnxdL.jpg",
+            "pt": "https://m.media-amazon.com/images/I/616k7KV+qEL._SL466_.jpg"
+          },
+          "link": {
+            "en": "https://www.amazon.com/dp/B004AM5PJA/",
+            "pt": "https://www.amazon.com.br/Nossa-Cultura-que-Restou-Dela/dp/8580331633/"
+          }
         }
       ]
     },

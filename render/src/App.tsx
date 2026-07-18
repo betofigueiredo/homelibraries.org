@@ -6,6 +6,7 @@ import { Experience } from './game/Experience'
 import { Overlay } from './components/Overlay'
 import { LoadingOverlay } from './components/LoadingOverlay'
 import { CatInfo } from './components/CatInfo'
+import { BooksPanel } from './components/BooksPanel'
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         </Suspense>
       </Canvas>
       <Overlay />
+      <BooksPanel />
       <CatInfo />
       <LoadingOverlay />
     </KeyboardControls>

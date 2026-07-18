@@ -1,5 +1,10 @@
+import { useGame } from '../game/useGame'
+
 /** Minimal HUD: wordmark + movement hint, layered above the canvas. */
 export function Overlay() {
+  // The hint pill shares the bottom edge with the books sheet — step aside
+  // while the cat is inside a reading court.
+  const inCourt = useGame((s) => s.activeSectionId !== null)
   return (
     <div
       style={{
@@ -36,11 +41,17 @@ export function Overlay() {
           padding: '9px 16px',
           borderRadius: 999,
           backdropFilter: 'blur(6px)',
+          opacity: inCourt ? 0 : 1,
+          translate: inCourt ? '0 10px' : '0 0',
+          transitionProperty: 'opacity, translate',
+          transitionDuration: '260ms',
+          transitionTimingFunction: 'cubic-bezier(0.2, 0, 0, 1)',
         }}
       >
         <strong>W</strong>/<strong>S</strong> walk{' · '}
         <strong>A</strong>/<strong>D</strong> turn the camera
-        {' · '}Press <strong>I</strong> for info about Gorda
+        {' · '}visit a reading court to browse its books
+        {' · '}<strong>I</strong> for Gorda
       </div>
     </div>
   )
