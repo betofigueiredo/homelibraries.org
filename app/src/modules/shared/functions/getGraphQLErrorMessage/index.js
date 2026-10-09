@@ -1,1 +1,0 @@
-export { getGraphQLErrorMessage } from './getGraphQLErrorMessage';
