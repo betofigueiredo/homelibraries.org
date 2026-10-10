@@ -1,0 +1,36 @@
+# /etc/systemd/system/homelibraries.service (DEPLOY.md, step 5)
+[Unit]
+Description=Home Libraries
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=homelibraries
+Group=homelibraries
+WorkingDirectory=/home/homelibraries/app
+ExecStart=/home/homelibraries/app/api
+# Secrets: RESEND_API_KEY and MAIL_FROM.
+EnvironmentFile=/home/homelibraries/app/.env
+Environment=PORT=3000
+Environment=DATABASE_URL=sqlite:///home/homelibraries/app/library.db
+Environment=PUBLIC_URL=https://homelibraries.org
+Environment=RUST_LOG=info
+
+# Come back after any exit, not only crashes.
+Restart=always
+RestartSec=2
+
+# Sandbox: the app can write only to its own folder, and can't gain privileges.
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/home/homelibraries/app
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+
+[Install]
+WantedBy=multi-user.target

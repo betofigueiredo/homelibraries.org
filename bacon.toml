@@ -1,0 +1,26 @@
+# https://dystroy.org/bacon/config/
+default_job = "clippy-all"
+
+[jobs.clippy-all]
+command = ["cargo", "clippy", "--all-targets"]
+need_stdout = false
+
+[jobs.test]
+command = ["cargo", "nextest", "run", "--hide-progress-bar", "--failure-output", "final"]
+need_stdout = true
+analyzer = "nextest"
+
+# Runs the server and restarts it whenever the code changes.
+[jobs.serve]
+command = ["cargo", "run"]
+# The app is opened through Vite (`task web:dev`), so sign-in links and the
+# same-origin check use its address. Sign-in links are printed in this log.
+env = { PUBLIC_URL = "http://localhost:3000" }
+need_stdout = true
+allow_warnings = true
+background = false
+on_change_strategy = "kill_then_restart"
+kill = ["kill", "-s", "INT"]
+
+[keybindings]
+s = "job:serve"

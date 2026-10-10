@@ -1,28 +1,10 @@
-# Logs
-# Design folder
-design
-_design
-_older_versions
-
-# Logs
-logs
-app/logs
-server/logs
-*.log
-app/*.log
-server/*.log
-
-# Runtime data
-pids
-*.pid
-*.seed
-
-# Dependency directory
-node_modules
-app/node_modules
-server/node_modules
-# _older_versions/v1/node_modules
-# _older_versions/v2/node_modules
-
-# Ignore build files
-app/build
+/target
+*.db
+*.db-shm
+*.db-wal
+/web/node_modules
+/web/dist
+goodreads_library_export.csv
+.task/
+*.tsbuildinfo
+.claude/settings.local.json

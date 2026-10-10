@@ -1,0 +1,9 @@
+# /etc/litestream.yml (DEPLOY.md, step 6): streams every change to library.db to Cloudflare R2.
+# Holds the R2 keys: owned by homelibraries, mode 600.
+access-key-id: R2_ACCESS_KEY_ID
+secret-access-key: R2_SECRET_ACCESS_KEY
+
+dbs:
+  - path: /home/homelibraries/app/library.db
+    replica:
+      url: s3://homelibraries-backups/library.db?endpoint=ACCOUNT_ID.r2.cloudflarestorage.com&region=auto

@@ -1,0 +1,90 @@
+/* Design tokens from the approved canvas: warm paper, ink, deep teal, mint. */
+:root {
+  --paper: #fafaf8;
+  --card: #ffffff;
+  --sunken: #f3f2ee;
+  --sunken-2: #fcfbf9;
+  --line: #e6e3dc;
+  --line-soft: #ece9e2;
+  --line-strong: #d6d2c8;
+
+  --ink: #0b0f14;
+  --ink-2: #4b5260;
+  --muted: #6b7280;
+  --faint: #9a9fa8;
+
+  --accent: #16485a;
+  --accent-ink: #0e3240;
+  --mint: #a4f6f2;
+  --ok: #1f9d6b;
+  --danger: #a3341f;
+  --danger-ink: #7a2414;
+  --danger-bg: #fdf1ee;
+  --danger-line: #f1c7bf;
+
+  /* Cloth colors for covers and spines. */
+  --cloth-1: #16485a;
+  --cloth-2: #7e2a1f;
+  --cloth-3: #b5833a;
+  --cloth-4: #0b0f14;
+  --cloth-5: #2e4a3b;
+  --cloth-6: #24364f;
+
+  /* Always-dark panels ("Connect your AI"). */
+  --night: #0b0f14;
+  --night-2: #14181f;
+  --night-line: #262a33;
+  --night-text: #e8e6e1;
+  --night-muted: #b4b8c0;
+
+  /* Primary button: ink pill. */
+  --button: #0b0f14;
+  --button-text: #ffffff;
+
+  --serif: "Charis SIL", Charter, "Bitstream Charter", Georgia, serif;
+  --mono: "Fragment Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 20px;
+  --shadow-lift: 0 1px 2px rgb(11 15 20 / 4%), 0 8px 24px -12px rgb(11 15 20 / 12%);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0f1216;
+    --card: #161a20;
+    --sunken: #1c2027;
+    --sunken-2: #13171c;
+    --line: #2a2f37;
+    --line-soft: #232830;
+    --line-strong: #39404a;
+
+    --ink: #ece9e2;
+    --ink-2: #b9bcc3;
+    --muted: #9196a0;
+    --faint: #6b707a;
+
+    --accent: #7cc4d6;
+    --accent-ink: #0e3240;
+    --mint: #a4f6f2;
+    --danger: #f08a74;
+    --danger-ink: #f5b3a4;
+    --danger-bg: #2a1814;
+    --danger-line: #5a2a20;
+
+    --cloth-4: #39404a;
+
+    --night: #080a0d;
+    --night-2: #0f1216;
+    --night-line: #262a33;
+
+    --button: #ece9e2;
+    --button-text: #0b0f14;
+    --shadow-lift: 0 1px 2px rgb(0 0 0 / 30%), 0 8px 24px -12px rgb(0 0 0 / 50%);
+
+    color-scheme: dark;
+  }
+}

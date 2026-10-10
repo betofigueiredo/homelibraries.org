@@ -1,0 +1,53 @@
+# VPS tasks: run them from your machine (CI runs `deploy` on every push to master).
+# They reach the VPS over SSH as the site user; the one-time server setup is in DEPLOY.md.
+version: '3'
+
+vars:
+  # Override with VPS_SSH=user@host, e.g. the IP while DNS is new.
+  SSH: '{{.VPS_SSH | default "homelibraries@homelibraries.org"}}'
+  SERVICE: homelibraries
+  APP_DIR: /home/homelibraries/app
+  URL: https://homelibraries.org
+
+tasks:
+  deploy:
+    desc: Build the Linux binary, copy it up, swap it in and restart (rolls back if /health fails)
+    cmds:
+      - task: :build:linux
+      - scp -q target/x86_64-unknown-linux-musl/release/api {{.SSH}}:{{.APP_DIR}}/api.new
+      - scp -q deploy/activate.sh {{.SSH}}:{{.APP_DIR}}/activate.sh
+      - ssh {{.SSH}} {{.APP_DIR}}/activate.sh
+
+  rollback:
+    desc: Go back to the previous binary (run it again to roll forward)
+    prompt: Swap the running binary with the previous one?
+    cmds:
+      - ssh {{.SSH}} {{.APP_DIR}}/activate.sh rollback
+
+  status:
+    desc: Show the app's and Litestream's service status
+    cmds:
+      - ssh {{.SSH}} systemctl status {{.SERVICE}} litestream --no-pager
+
+  logs:
+    desc: Follow the app's logs (Ctrl+C to stop)
+    cmds:
+      - ssh -t {{.SSH}} journalctl -u {{.SERVICE}} -f
+
+  logs:recent:
+    desc: Show the app's last 100 log lines
+    cmds:
+      - ssh {{.SSH}} journalctl -u {{.SERVICE}} -n 100 --no-pager
+
+  restart:
+    desc: Restart the app
+    cmds:
+      - ssh {{.SSH}} sudo systemctl restart {{.SERVICE}}
+      - sleep 2
+      - task: health
+
+  health:
+    desc: Call /health on the public URL
+    cmds:
+      - curl -fsS {{.URL}}/health
+      - echo

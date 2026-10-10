@@ -1,0 +1,207 @@
+# https://taskfile.dev
+version: '3'
+
+includes:
+  vps: ./Taskfile.vps.yml
+
+vars:
+  # The app is opened through Vite in development (see `dev`).
+  WEB_URL: http://localhost:5173
+  API_URL: http://localhost:3000
+  DB: library.db
+
+tasks:
+  default:
+    desc: List available tasks
+    cmds:
+      - task --list
+    silent: true
+
+  setup:
+    desc: Install the Rust dev tools and the frontend's dependencies
+    cmds:
+      - cargo install --locked bacon cargo-nextest cargo-deny
+      - task: web:install
+
+  # ---------- Run ----------
+
+  dev:
+    desc: "API (:3000, restarts on changes) and app (:5173, hot reload) in one terminal; open http://localhost:5173"
+    deps: [dev:api:headless, web:dev]
+
+  dev:api:
+    desc: API only, in bacon's UI (pair with `task web:dev` in another terminal); sign-in links show in its log
+    cmds:
+      - bacon serve
+
+  dev:api:headless:
+    internal: true
+    cmds:
+      - bacon --headless serve
+
+  web:dev:
+    desc: App only, on :5173 with hot reload (needs the API running on :3000)
+    dir: web
+    deps: [web:install]
+    cmds:
+      - npm run dev
+
+  serve:
+    desc: Run it like production on :3000, with the built app inside the binary (no Vite)
+    deps: [web:build]
+    env:
+      PUBLIC_URL: '{{.API_URL}}'
+    cmds:
+      - cargo run --release
+
+  # ---------- Check ----------
+
+  check:
+    desc: Quick check before a commit (formatting, both linters, tests)
+    cmds:
+      - task: fmt:check
+      - task: web:lint
+      - task: lint
+      - task: test
+
+  ci:
+    desc: Run everything CI runs
+    cmds:
+      - task: fmt:check
+      - task: web:lint
+      - task: web:build
+      - task: lint
+      - task: test
+      - task: deny
+
+  fmt:
+    desc: Format all Rust code
+    cmds:
+      - cargo fmt --all
+
+  fmt:check:
+    desc: Check Rust formatting without writing
+    cmds:
+      - cargo fmt --all -- --check
+
+  fix:
+    desc: Apply clippy's and ESLint's automatic fixes, then format
+    cmds:
+      - cargo clippy --fix --allow-dirty --allow-staged --all-targets --all-features
+      - task: web:fix
+      - task: fmt
+
+  lint:
+    desc: Run clippy, failing on any warning
+    cmds:
+      - cargo clippy --all-targets --all-features -- -D warnings
+
+  watch:
+    desc: Clippy on every change (press t/c/r in bacon to switch jobs)
+    cmds:
+      - bacon clippy-all
+
+  test:
+    desc: Run the Rust tests with nextest (`task test -- import` to filter)
+    cmds:
+      - cargo nextest run --all-features {{.CLI_ARGS}}
+
+  test:watch:
+    desc: Rerun the Rust tests on every change
+    cmds:
+      - bacon test
+
+  deny:
+    desc: Check dependencies for advisories, licenses and bans
+    cmds:
+      - cargo deny check
+
+  web:lint:
+    desc: Lint and typecheck the frontend
+    dir: web
+    deps: [web:install]
+    cmds:
+      - npm run lint
+
+  web:fix:
+    desc: Apply ESLint's automatic fixes to the frontend
+    dir: web
+    deps: [web:install]
+    cmds:
+      - npx eslint . --fix
+
+  # ---------- Build ----------
+
+  build:
+    desc: Release build with the app inside (target/release/api)
+    cmds:
+      - task: web:build
+      - cargo build --release
+
+  build:linux:
+    desc: Release build for the VPS, one static binary for any x86-64 Linux (needs `musl-tools`)
+    cmds:
+      - rustup target add x86_64-unknown-linux-musl
+      - task: web:build
+      - cargo build --release --target x86_64-unknown-linux-musl
+
+  web:build:
+    desc: Build the frontend into web/dist, which the binary embeds
+    dir: web
+    deps: [web:install]
+    cmds:
+      - npm run build
+
+  web:install:
+    desc: Install the frontend's dependencies (skipped when package-lock.json hasn't changed)
+    dir: web
+    sources: [package.json, package-lock.json]
+    # npm writes this file on install, so a deleted node_modules installs again.
+    generates: [node_modules/.package-lock.json]
+    cmds:
+      - npm ci
+
+  clean:
+    desc: Remove build output (target/, web/dist, web/node_modules)
+    cmds:
+      - cargo clean
+      - rm -rf web/dist web/node_modules
+
+  # ---------- Data and tools ----------
+
+  db:reset:
+    desc: Delete the local database (library.db); it's recreated empty on the next start
+    prompt: Delete {{.DB}} and every local user and book?
+    cmds:
+      - rm -f {{.DB}} {{.DB}}-shm {{.DB}}-wal
+
+  signin:
+    desc: "Ask for a sign-in link (`task signin EMAIL=you@example.com`); without RESEND_API_KEY it's printed in the API's log"
+    requires:
+      vars: [EMAIL]
+    cmds:
+      - >-
+        curl -fsS -o /dev/null -w "%{http_code}: link sent to {{.EMAIL}}, see the API log\n"
+        -H 'content-type: application/json' -d '{"email":"{{.EMAIL}}"}' {{.API_URL}}/api/auth/link
+
+  mcp:add:
+    desc: "Add a local library's MCP server to Claude Code (`task mcp:add LIBRARY=beto`)"
+    requires:
+      vars: [LIBRARY]
+    cmds:
+      - claude mcp add --transport http local-{{.LIBRARY}}-library {{.API_URL}}/{{.LIBRARY}}/mcp
+
+  mcp:remove:
+    desc: "Remove it again (`task mcp:remove LIBRARY=beto`)"
+    requires:
+      vars: [LIBRARY]
+    cmds:
+      - claude mcp remove local-{{.LIBRARY}}-library
+
+  outdated:
+    desc: List dependencies with newer versions
+    cmds:
+      - cmd: cargo update --dry-run --verbose 2>&1 | grep -i "unchanged\|updating" || true
+      - cmd: cd web && npm outdated
+        # npm exits with 1 when something is outdated; that's the answer, not a failure.
+        ignore_error: true

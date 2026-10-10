@@ -1,0 +1,3 @@
+# /etc/sudoers.d/homelibraries (DEPLOY.md, step 5): the site user may restart its own service,
+# which `deploy/activate.sh` does after swapping the binary. Nothing else.
+homelibraries ALL=(root) NOPASSWD: /usr/bin/systemctl restart homelibraries
