@@ -11,12 +11,16 @@ use csv::StringRecord;
 use serde::{Serialize, de::DeserializeOwned};
 
 use super::service::{ImportLibraryInput, ImportedBook};
-use crate::{books::model::Source, error::AppError};
+use crate::{
+    books::model::{ReadingStatus, Source},
+    error::AppError,
+};
 
 /// What happens to one row of the file.
 enum Row {
+    /// Read, reading or to-read; to-read books are only imported when the user asks.
     Import(ImportedBook),
-    /// Not read or being read (to-read, abandoned, custom shelves): left out on purpose.
+    /// On another shelf (abandoned, custom ones): left out on purpose.
     Ignore,
     /// Unusable, e.g. no title. The id, when known, keeps the stored book from being deleted.
     Skip {
@@ -48,7 +52,28 @@ pub struct ParsedFile {
 }
 
 impl ParsedFile {
-    pub fn into_input(self) -> ImportLibraryInput {
+    /// Books on the to-read shelf.
+    pub fn to_read(&self) -> usize {
+        self.books
+            .iter()
+            .filter(|b| b.status == ReadingStatus::ToRead)
+            .count()
+    }
+
+    /// Without `include_to_read`, to-read books are ignored like any other shelf, so an
+    /// earlier import's to-read books are deleted.
+    pub fn into_input(mut self, include_to_read: bool) -> ImportLibraryInput {
+        if !include_to_read {
+            let (to_read, books) = self
+                .books
+                .into_iter()
+                .partition::<Vec<_>, _>(|b| b.status == ReadingStatus::ToRead);
+            for book in &to_read {
+                self.ids_in_file.remove(&book.external_id);
+            }
+            self.ignored += u32::try_from(to_read.len()).unwrap_or(u32::MAX);
+            self.books = books;
+        }
         ImportLibraryInput {
             source: self.source,
             books: self.books,

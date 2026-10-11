@@ -35,7 +35,7 @@ pub struct ImportLibraryInput {
     pub books: Vec<ImportedBook>,
     /// Rows the handler couldn't parse; reported back to the caller.
     pub skipped: u32,
-    /// Rows on a shelf other than read or currently-reading (to-read, custom ones).
+    /// Rows on a shelf that isn't imported (custom ones, and to-read unless the user chose it).
     pub ignored: u32,
     /// External ids of the imported and skipped rows. Stored books from `source` whose id is
     /// not here are deleted, so a skipped row never deletes its book, and an ignored one does.
@@ -65,7 +65,7 @@ impl ImportLibraryService {
     }
 
     /// The file is the only source of truth for the owner's books from its source: afterwards
-    /// their library holds exactly the file's read and reading books (other sources' stay).
+    /// their library holds exactly the file's imported books (other sources' stay).
     /// Matches books by external id, so importing the same file twice creates no duplicates.
     /// A matched book takes every field from the file, and is only written when one changed.
     pub async fn execute(

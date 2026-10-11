@@ -50,6 +50,7 @@ impl FormatRow for GoodreadsRow {
         let status = match self.shelf.trim() {
             "read" => ReadingStatus::Read,
             "currently-reading" => ReadingStatus::Reading,
+            "to-read" => ReadingStatus::ToRead,
             _ => return Row::Ignore,
         };
         let external_id = non_empty(&self.book_id).map(str::to_owned);
@@ -89,7 +90,8 @@ impl FormatRow for GoodreadsRow {
 
 #[cfg(test)]
 mod tests {
-    use super::super::parse;
+    use super::super::{ImportLibraryInput, parse};
+    use crate::books::model::ReadingStatus;
 
     const HEADER: &str = "Book Id,Title,Author,ISBN13,My Rating,Number of Pages,Original Publication Year,Date Read,Exclusive Shelf,Owned Copies";
 
@@ -129,11 +131,11 @@ mod tests {
         let file = parse(&csv).unwrap();
 
         assert_eq!(file.skipped[0].line, 2);
-        assert!(file.into_input().ids_in_file.contains("1"));
+        assert!(file.into_input(false).ids_in_file.contains("1"));
     }
 
     #[test]
-    fn only_read_and_reading_shelves_are_imported() {
+    fn to_read_books_are_imported_only_when_asked() {
         let csv = format!(
             "{HEADER}\n\
              1,Dune,Frank Herbert,,5,,,,read,0\n\
@@ -141,13 +143,26 @@ mod tests {
              3,Animal Farm,George Orwell,,0,,,,to-read,1\n\
              4,Emma,Jane Austen,,0,,,,abandoned,0\n"
         );
+        let titles = |input: &ImportLibraryInput| -> Vec<String> {
+            input.books.iter().map(|b| b.title.clone()).collect()
+        };
 
         let file = parse(&csv).unwrap();
+        assert_eq!(
+            (file.to_read(), file.ignored, file.skipped.len()),
+            (1, 1, 0)
+        );
 
-        let titles: Vec<_> = file.books.iter().map(|b| b.title.as_str()).collect();
-        assert_eq!(titles, ["Dune", "Neuromancer"]);
-        assert_eq!((file.ignored, file.skipped.len()), (2, 0));
-        // Ignored rows are not "in the file", so a to-read book would be deleted.
-        assert!(!file.into_input().ids_in_file.contains("3"));
+        let without = parse(&csv).unwrap().into_input(false);
+        assert_eq!(titles(&without), ["Dune", "Neuromancer"]);
+        assert_eq!(without.ignored, 2);
+        // Ignored rows are not "in the file", so a stored to-read book is deleted.
+        assert!(!without.ids_in_file.contains("3"));
+
+        let with = parse(&csv).unwrap().into_input(true);
+        assert_eq!(titles(&with), ["Dune", "Neuromancer", "Animal Farm"]);
+        assert_eq!(with.books[2].status, ReadingStatus::ToRead);
+        assert_eq!(with.ignored, 1);
+        assert!(with.ids_in_file.contains("3"));
     }
 }

@@ -21,7 +21,7 @@ use crate::{
 pub struct SearchBooksRequest {
     /// Text to find in the title or author (case-insensitive).
     q: Option<String>,
-    /// `read` or `reading`.
+    /// `read`, `reading` or `to_read` (books they want to read).
     status: Option<ReadingStatus>,
     /// `true`: only books the reader owns. `false`: only books they don't.
     owned: Option<bool>,

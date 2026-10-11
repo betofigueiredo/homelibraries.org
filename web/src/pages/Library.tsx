@@ -139,6 +139,7 @@ const FILTERS: { value: ReadingStatus | undefined; label: string }[] = [
   { value: undefined, label: "All" },
   { value: "read", label: "Read" },
   { value: "reading", label: "Reading" },
+  { value: "to_read", label: "To read" },
 ];
 
 function AllBooks({ username, total }: { username: string; total: number }) {

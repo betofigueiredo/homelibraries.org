@@ -1,7 +1,7 @@
 // Each test file uses a different subset of these helpers.
 #![allow(dead_code)]
 
-use std::sync::Arc;
+use std::{fmt::Write, sync::Arc};
 
 use api::{mailer::LogMailer, state::AppState};
 use axum::{
@@ -120,18 +120,44 @@ impl TestApp {
 
     /// Uploads `csv` to the import as the form field `file`, like `curl -F file=@...`.
     pub async fn import(&self, csv: &str, cookie: Option<&str>) -> (StatusCode, Value) {
-        self.upload("/api/me/import", csv, cookie).await
+        self.upload("/api/me/import", csv, &[], cookie).await
+    }
+
+    /// Imports `csv` with extra form fields, e.g. `("include_to_read", "true")`.
+    pub async fn import_with(
+        &self,
+        csv: &str,
+        fields: &[(&str, &str)],
+        cookie: Option<&str>,
+    ) -> (StatusCode, Value) {
+        self.upload("/api/me/import", csv, fields, cookie).await
     }
 
     /// Uploads `csv` to the import preview, which writes nothing.
     pub async fn preview(&self, csv: &str, cookie: Option<&str>) -> (StatusCode, Value) {
-        self.upload("/api/me/import/preview", csv, cookie).await
+        self.upload("/api/me/import/preview", csv, &[], cookie)
+            .await
     }
 
-    async fn upload(&self, uri: &str, csv: &str, cookie: Option<&str>) -> (StatusCode, Value) {
+    async fn upload(
+        &self,
+        uri: &str,
+        csv: &str,
+        fields: &[(&str, &str)],
+        cookie: Option<&str>,
+    ) -> (StatusCode, Value) {
         const BOUNDARY: &str = "test-boundary";
+        let fields = fields.iter().fold(String::new(), |mut out, (name, value)| {
+            let _ = write!(
+                out,
+                "--{BOUNDARY}\r\n\
+                 Content-Disposition: form-data; name=\"{name}\"\r\n\r\n\
+                 {value}\r\n"
+            );
+            out
+        });
         let body = format!(
-            "--{BOUNDARY}\r\n\
+            "{fields}--{BOUNDARY}\r\n\
              Content-Disposition: form-data; name=\"file\"; filename=\"export.csv\"\r\n\
              Content-Type: text/csv\r\n\r\n\
              {csv}\r\n\

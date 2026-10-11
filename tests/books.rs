@@ -146,7 +146,7 @@ async fn search_filters_by_text_status_and_owned() {
         ["Neuromancer"]
     );
 
-    let (status, _) = app.get("/api/libraries/ada/books?status=to_read").await;
+    let (status, _) = app.get("/api/libraries/ada/books?status=abandoned").await;
     assert_eq!(status, StatusCode::BAD_REQUEST);
 }
 
@@ -179,7 +179,7 @@ async fn stats_count_books() {
     assert_eq!(
         body,
         json!({
-            "total": 2, "read": 1, "reading": 1, "owned": 1, "five_stars": 1,
+            "total": 2, "read": 1, "reading": 1, "to_read": 0, "owned": 1, "five_stars": 1,
             "read_per_year": { "2024": 1 }
         })
     );
@@ -221,6 +221,49 @@ async fn import_is_idempotent_and_leaves_to_read_books_out() {
             .await
             .is_empty()
     );
+}
+
+#[tokio::test]
+async fn to_read_books_are_imported_when_asked_and_removed_when_not() {
+    let app = common::app();
+    let cookie = app.sign_up("ada@mail.com", "ada").await;
+
+    let (status, summary) = app
+        .import_with(
+            common::FIXTURE,
+            &[("include_to_read", "true")],
+            Some(&cookie),
+        )
+        .await;
+    assert_eq!(status, StatusCode::OK);
+    assert_eq!(
+        summary,
+        json!({ "source": "goodreads", "created": 3, "updated": 0, "unchanged": 0, "skipped": 1, "ignored": 0, "deleted": 0 })
+    );
+    let (_, books) = app.get("/api/libraries/ada/books?status=to_read").await;
+    assert_eq!(books["books"][0]["title"], "Animal Farm");
+    let (_, totals) = app.get("/api/libraries/ada/stats").await;
+    assert_eq!(totals["to_read"], 1);
+
+    let (_, summary) = app.import(common::FIXTURE, Some(&cookie)).await;
+    assert_eq!(
+        summary,
+        json!({ "source": "goodreads", "created": 0, "updated": 0, "unchanged": 2, "skipped": 1, "ignored": 1, "deleted": 1 })
+    );
+    assert!(
+        titles(&app, "/api/libraries/ada/books?q=animal")
+            .await
+            .is_empty()
+    );
+
+    let (status, _) = app
+        .import_with(
+            common::FIXTURE,
+            &[("include_to_read", "yes")],
+            Some(&cookie),
+        )
+        .await;
+    assert_eq!(status, StatusCode::BAD_REQUEST);
 }
 
 #[tokio::test]
@@ -305,8 +348,9 @@ async fn preview_reports_the_file_without_writing() {
             &preview["ignored"],
             &preview["skipped"]
         ),
-        (&json!(2), &json!(1), &json!(1))
+        (&json!(2), &json!(0), &json!(1))
     );
+    assert_eq!(preview["to_read"], 1);
     assert_eq!(preview["sample"][0]["title"], "Dune (Dune, #1)");
     assert_eq!(preview["errors"][0]["line"], 5);
     assert!(titles(&app, "/api/libraries/ada/books").await.is_empty());

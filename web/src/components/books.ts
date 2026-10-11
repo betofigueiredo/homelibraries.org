@@ -17,7 +17,9 @@ export function ratingLabel(rating: number | null) {
   return rating ? `${rating} of 5 stars` : "Not rated";
 }
 
-export const statusLabel = (status: ImportedBook["status"]) => (status === "reading" ? "Reading" : "Read");
+const STATUS_LABELS: Record<ImportedBook["status"], string> = { read: "Read", reading: "Reading", to_read: "To read" };
+
+export const statusLabel = (status: ImportedBook["status"]) => STATUS_LABELS[status];
 
 /** Goodreads titles end with the series: "Dune (Dune, #1)" → "Dune". */
 export const shortTitle = (title: string) => title.replace(/\s*\([^)]*#\d+(\.\d+)?\)$/, "");

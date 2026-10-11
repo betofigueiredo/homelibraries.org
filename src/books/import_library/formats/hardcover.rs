@@ -53,6 +53,7 @@ impl FormatRow for HardcoverRow {
         let status = match self.status.trim() {
             "Read" => ReadingStatus::Read,
             "Currently Reading" => ReadingStatus::Reading,
+            "Want to Read" => ReadingStatus::ToRead,
             _ => return Row::Ignore,
         };
         let external_id = non_empty(&self.book_id).map(str::to_owned);
@@ -136,7 +137,7 @@ mod tests {
     }
 
     #[test]
-    fn other_statuses_are_ignored() {
+    fn want_to_read_is_to_read_and_other_statuses_are_ignored() {
         let header = FIXTURE.lines().next().unwrap();
         let row = FIXTURE.lines().nth(2).unwrap();
         let csv = format!(
@@ -147,8 +148,9 @@ mod tests {
 
         let file = parse(&csv).unwrap();
 
-        assert!(file.books.is_empty());
-        assert_eq!(file.ignored, 2);
+        assert_eq!(file.books.len(), 1);
+        assert_eq!(file.books[0].status, ReadingStatus::ToRead);
+        assert_eq!(file.ignored, 1);
     }
 
     #[test]

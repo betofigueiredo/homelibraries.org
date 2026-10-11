@@ -18,6 +18,7 @@ pub struct LibraryStats {
     pub total: u32,
     pub read: u32,
     pub reading: u32,
+    pub to_read: u32,
     pub owned: u32,
     /// Books rated 5 stars.
     pub five_stars: u32,
@@ -43,6 +44,7 @@ impl LibraryStatsService {
             match book.status {
                 ReadingStatus::Reading => stats.reading += 1,
                 ReadingStatus::Read => stats.read += 1,
+                ReadingStatus::ToRead => stats.to_read += 1,
             }
             if book.owned {
                 stats.owned += 1;

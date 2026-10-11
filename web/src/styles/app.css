@@ -1080,6 +1080,17 @@ select {
   background: var(--card);
 }
 
+.to-read-choice {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.to-read-choice .hint {
+  margin-top: 4px;
+}
+
 .ok-icon {
   display: inline-flex;
   color: var(--ok);

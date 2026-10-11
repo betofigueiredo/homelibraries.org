@@ -1,6 +1,6 @@
 // Typed calls to the Rust API. Shapes mirror the structs the handlers serialize.
 
-export type ReadingStatus = "read" | "reading";
+export type ReadingStatus = "read" | "reading" | "to_read";
 export type Source = "goodreads" | "hardcover";
 export type SortBy = "title" | "author" | "date_read";
 
@@ -40,6 +40,7 @@ export interface LibraryStats {
   total: number;
   read: number;
   reading: number;
+  to_read: number;
   owned: number;
   five_stars: number;
   read_per_year: Record<string, number>;
@@ -50,6 +51,7 @@ export type ImportedBook = Omit<Book, "id" | "source">;
 export interface ImportPreview {
   source: Source;
   to_import: number;
+  to_read: number;
   ignored: number;
   skipped: number;
   sample: ImportedBook[];
@@ -99,8 +101,9 @@ const get = <T>(path: string) => request<T>("GET", path);
 const send = <T>(method: string, path: string, body: unknown) =>
   request<T>(method, path, JSON.stringify(body), true);
 
-function upload<T>(path: string, file: File) {
+function upload<T>(path: string, file: File, fields: Record<string, string> = {}) {
   const form = new FormData();
+  for (const [name, value] of Object.entries(fields)) form.append(name, value);
   form.append("file", file);
   return request<T>("POST", path, form);
 }
@@ -132,7 +135,9 @@ export const api = {
   },
 
   previewImport: (file: File) => upload<ImportPreview>("/api/me/import/preview", file),
-  runImport: (file: File) => upload<ImportSummary>("/api/me/import", file),
+  /** To-read books are only imported with `includeToRead`. */
+  runImport: ({ file, includeToRead }: { file: File; includeToRead: boolean }) =>
+    upload<ImportSummary>("/api/me/import", file, { include_to_read: String(includeToRead) }),
 };
 
 export const sourceName: Record<Source, string> = {

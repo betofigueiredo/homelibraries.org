@@ -81,7 +81,7 @@ function Import({ username }: { username: string }) {
           preview={preview.data}
           importing={run.isPending}
           error={run.error?.message}
-          onImport={() => run.mutate(file)}
+          onImport={(includeToRead) => run.mutate({ file, includeToRead })}
           onRestart={restart}
         />
       )}
@@ -183,11 +183,16 @@ function Check({
   preview: ImportPreview;
   importing: boolean;
   error: string | undefined;
-  onImport: () => void;
+  onImport: (includeToRead: boolean) => void;
   onRestart: () => void;
 }) {
   const source = sourceName[preview.source];
-  const books = preview.to_import === 1 ? "book" : "books";
+  // The user picks what happens to the to-read shelf; there's nothing to pick without one.
+  const [toRead, setToRead] = useState<"import" | "discard" | null>(preview.to_read ? null : "discard");
+  const includeToRead = toRead === "import";
+  const count = preview.to_import + (includeToRead ? preview.to_read : 0);
+  const leftOut = preview.ignored + (includeToRead ? 0 : preview.to_read);
+  const books = count === 1 ? "book" : "books";
 
   return (
     <section className="import-check fade-up">
@@ -202,13 +207,13 @@ function Check({
       <div className="stats">
         <div className="stat stat-focus">
           <div className="stat-label">Will be imported</div>
-          <div className="stat-value">{preview.to_import}</div>
-          <div className="stat-sub">Read and currently reading</div>
+          <div className="stat-value">{count}</div>
+          <div className="stat-sub">{includeToRead ? "Read, reading and to-read" : "Read and currently reading"}</div>
         </div>
         <div className="stat">
           <div className="stat-label">Left out</div>
-          <div className="stat-value">{preview.ignored}</div>
-          <div className="stat-sub">To-read and other shelves</div>
+          <div className="stat-value">{leftOut}</div>
+          <div className="stat-sub">{includeToRead ? "Other shelves" : "To-read and other shelves"}</div>
         </div>
         <div className="stat">
           <div className="stat-label">Rows with problems</div>
@@ -216,6 +221,25 @@ function Check({
           <div className="stat-sub">{preview.skipped ? "Skipped, see below" : "Nothing to fix"}</div>
         </div>
       </div>
+
+      {preview.to_read > 0 && (
+        <div className="card card-pad to-read-choice">
+          <div>
+            <strong id="to-read-question">
+              {preview.to_read} {preview.to_read === 1 ? "book is" : "books are"} on your to-read shelf
+            </strong>
+            <p className="hint">Import them as “To read”, or leave them out of your library?</p>
+          </div>
+          <div className="segmented" role="group" aria-labelledby="to-read-question">
+            <button type="button" aria-pressed={toRead === "import"} onClick={() => setToRead("import")}>
+              Import them
+            </button>
+            <button type="button" aria-pressed={toRead === "discard"} onClick={() => setToRead("discard")}>
+              Leave them out
+            </button>
+          </div>
+        </div>
+      )}
 
       {preview.sample.length > 0 && (
         <div className="card table-card">
@@ -273,8 +297,14 @@ function Check({
       )}
 
       <div className="button-row">
-        <button type="button" className="btn btn-primary" onClick={onImport} disabled={importing || preview.to_import === 0}>
-          {importing ? "Importing…" : `Import ${preview.to_import} ${books}`} <span aria-hidden="true">→</span>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => onImport(includeToRead)}
+          disabled={importing || toRead === null || count === 0}
+        >
+          {importing ? "Importing…" : toRead === null ? "Choose what to do with to-read books" : `Import ${count} ${books}`}{" "}
+          <span aria-hidden="true">→</span>
         </button>
         <button type="button" className="btn btn-secondary" onClick={onRestart} disabled={importing}>
           Choose another file

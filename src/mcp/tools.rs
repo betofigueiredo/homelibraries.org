@@ -80,7 +80,7 @@ impl LibraryMcp {
     }
 
     #[tool(
-        description = "Library totals: books read and being read, owned, five-star books, and books read per year.",
+        description = "Library totals: books read, being read and on the to-read list, owned, five-star books, and books read per year.",
         annotations(read_only_hint = true)
     )]
     async fn library_stats(&self) -> Result<String, String> {
@@ -138,6 +138,7 @@ impl LibraryMcp {
             Role::User,
             "Pick one interesting idea from this library and give me a path of 5 books to explore it \
              deeply. Use search_books with no filters to see every book, prefer books rated 4 or 5 stars, \
+             leave out books with status `to_read` (not read yet), \
              and order them so each one builds on the last. For each, say in one or two sentences what it \
              adds to the idea.",
         )]
@@ -174,8 +175,9 @@ impl ServerHandler for LibraryMcp {
         ))
         .with_instructions(
             "One person's reading history from Goodreads or Hardcover: the books they have read and are \
-             reading, with their ratings and when they finished them. Read-only. `owned` means they own a \
-             copy. Use search_books to find ids before get_book.",
+             reading, with their ratings and when they finished them, and maybe their to-read list \
+             (status `to_read`: not read yet). Read-only. `owned` means they own a copy. Use search_books \
+             to find ids before get_book.",
         )
     }
 }

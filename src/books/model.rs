@@ -23,12 +23,13 @@ impl Default for BookId {
     }
 }
 
-/// Only books someone has read or is reading are imported; to-read lists stay out.
+/// Books someone has read or is reading, plus their to-read list when they choose to import it.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ReadingStatus {
     Reading,
     Read,
+    ToRead,
 }
 
 impl ReadingStatus {
@@ -38,6 +39,7 @@ impl ReadingStatus {
         match self {
             Self::Reading => "reading",
             Self::Read => "read",
+            Self::ToRead => "to_read",
         }
     }
 
@@ -46,6 +48,7 @@ impl ReadingStatus {
         match value {
             "reading" => Some(Self::Reading),
             "read" => Some(Self::Read),
+            "to_read" => Some(Self::ToRead),
             _ => None,
         }
     }
