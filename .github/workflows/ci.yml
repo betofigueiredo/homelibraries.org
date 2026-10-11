@@ -75,6 +75,13 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
 
+      # Fails fast with SSH's own message (a bad key, an unknown host key), which the deploy's
+      # quiet scp hides behind "Connection closed".
+      - name: Check SSH access
+        run: ssh -o BatchMode=yes "$VPS_SSH" true
+        env:
+          VPS_SSH: ${{ vars.VPS_SSH }}
+
       - run: task vps:deploy
         env:
           VPS_SSH: ${{ vars.VPS_SSH }}
