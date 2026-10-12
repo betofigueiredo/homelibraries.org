@@ -77,6 +77,87 @@ function timeline(e: Example) {
 
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+/** One question and its answer, as far as `at` ticks into the example. */
+function Conversation({ e, at }: { e: Example; at: number }) {
+  const t = timeline(e);
+  const typing = at < t.typed;
+  const toolsDone = at >= t.tools;
+  const shown = toolsDone ? Math.min(e.items.length, Math.floor((at - t.tools) / ITEM_TICKS) + 1) : 0;
+
+  return (
+    <>
+      {/* The whole question is laid out from the start, so the bubble keeps its final
+          size and line breaks while the typed part fills it from the left. */}
+      <div className="bubble" aria-label={e.question}>
+        {typing ? (
+          <span aria-hidden="true">
+            {e.question.slice(0, at * 2)}
+            <span className="caret" />
+            <span className="bubble-untyped">{e.question.slice(at * 2)}</span>
+          </span>
+        ) : (
+          e.question
+        )}
+      </div>
+
+      {!typing && (
+        <div className="tool-calls">
+          {e.tools.map((call) => (
+            <span key={call} className="tool-call">
+              {toolsDone ? (
+                <span className="tool-ok">
+                  <CheckIcon size={10} />
+                </span>
+              ) : (
+                <span className="spinner spinner-sm" />
+              )}
+              {call}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {toolsDone && (
+        <div className="answer">
+          <span className="answer-mark" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+          <div className="answer-body">
+            <p className="fade-up">{e.intro}</p>
+            <ol>
+              {e.items.slice(0, shown).map(([title, author, note], i) => (
+                <li key={title} className="fade-up">
+                  {e.numbered ? (
+                    <span className="answer-n mono">{i + 1}</span>
+                  ) : (
+                    <span className="answer-rule" style={{ background: ACCENTS[i % ACCENTS.length] }} />
+                  )}
+                  <span>
+                    <span>
+                      <strong>{title}</strong> <span className="muted">· {author}</span>
+                    </span>
+                    <span className="answer-note">{note}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+            {shown < e.items.length && (
+              <span className="thinking" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
+            )}
+            {at >= t.outro && <p className="muted fade-up">{e.outro}</p>}
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
 /** An assistant answering questions from a library, replayed in a loop. */
 export function Demo() {
   // With reduced motion every example shows complete and nothing moves.
@@ -100,9 +181,6 @@ export function Demo() {
   const t = timeline(e);
   const at = still ? t.end : tick;
 
-  const typing = at < t.typed;
-  const toolsDone = at >= t.tools;
-  const shown = toolsDone ? Math.min(e.items.length, Math.floor((at - t.tools) / ITEM_TICKS) + 1) : 0;
   const progress = Math.min(1, at / t.end);
 
   return (
@@ -147,66 +225,17 @@ export function Demo() {
             ))}
           </div>
 
+          {/* Every finished conversation is laid out invisibly in the same cell, so the panel is
+              always as tall as the longest one and the page below never moves. */}
           <div id="demo-chat" className="demo-chat" role="tabpanel" aria-label={e.label}>
-            <div className="bubble">
-              {typing ? e.question.slice(0, at * 2) : e.question}
-              {typing && <span className="caret" aria-hidden="true" />}
+            <div className="demo-chat-layer">
+              <Conversation e={e} at={at} />
             </div>
-
-            {!typing && (
-              <div className="tool-calls">
-                {e.tools.map((call) => (
-                  <span key={call} className="tool-call">
-                    {toolsDone ? (
-                      <span className="tool-ok">
-                        <CheckIcon size={10} />
-                      </span>
-                    ) : (
-                      <span className="spinner spinner-sm" />
-                    )}
-                    {call}
-                  </span>
-                ))}
+            {EXAMPLES.map((x) => (
+              <div key={x.label} className="demo-chat-layer demo-chat-sizer" aria-hidden="true">
+                <Conversation e={x} at={timeline(x).end} />
               </div>
-            )}
-
-            {toolsDone && (
-              <div className="answer">
-                <span className="answer-mark" aria-hidden="true">
-                  <span />
-                  <span />
-                  <span />
-                </span>
-                <div className="answer-body">
-                  <p className="fade-up">{e.intro}</p>
-                  <ol>
-                    {e.items.slice(0, shown).map(([title, author, note], i) => (
-                      <li key={title} className="fade-up">
-                        {e.numbered ? (
-                          <span className="answer-n mono">{i + 1}</span>
-                        ) : (
-                          <span className="answer-rule" style={{ background: ACCENTS[i % ACCENTS.length] }} />
-                        )}
-                        <span>
-                          <span>
-                            <strong>{title}</strong> <span className="muted">· {author}</span>
-                          </span>
-                          <span className="answer-note">{note}</span>
-                        </span>
-                      </li>
-                    ))}
-                  </ol>
-                  {shown < e.items.length && (
-                    <span className="thinking" aria-hidden="true">
-                      <span />
-                      <span />
-                      <span />
-                    </span>
-                  )}
-                  {at >= t.outro && <p className="muted fade-up">{e.outro}</p>}
-                </div>
-              </div>
-            )}
+            ))}
           </div>
         </div>
       </div>
