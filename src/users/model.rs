@@ -52,8 +52,9 @@ pub struct Session {
     pub expires_at: DateTime<Utc>,
 }
 
-/// Usernames that would clash with the app's own routes (`/api`, `/signin`...).
-const RESERVED_USERNAMES: [&str; 14] = [
+/// Usernames nobody can pick: the app's own routes (`/api`, `/signin`...), plus names held
+/// back for the owner.
+const RESERVED_USERNAMES: [&str; 16] = [
     "api",
     "mcp",
     "assets",
@@ -68,6 +69,8 @@ const RESERVED_USERNAMES: [&str; 14] = [
     "about",
     "help",
     "www",
+    "betofigueiredo",
+    "herberto",
 ];
 
 /// Trimmed and lowercased; must look like `name@domain.tld`.
@@ -157,10 +160,12 @@ mod tests {
                 "{bad}"
             );
         }
-        assert!(matches!(
-            validate_username("api"),
-            Err(AppError::Conflict(_))
-        ));
+        for reserved in ["api", "Herberto"] {
+            assert!(
+                matches!(validate_username(reserved), Err(AppError::Conflict(_))),
+                "{reserved}"
+            );
+        }
     }
 
     #[test]
