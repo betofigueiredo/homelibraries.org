@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Link, NavLink } from "react-router";
 
 import { useMe } from "../auth";
+import { GitHubIcon } from "./Icons";
 import { Logo } from "./Logo";
 
 /** Initials for the avatar: "Beto Figueiredo" → "BF". */
@@ -19,6 +20,14 @@ export function Header({ children }: { children?: ReactNode }) {
         <Logo />
         <nav className="nav" aria-label="Main">
           {children}
+          <a
+            href="https://github.com/betofigueiredo/homelibraries.org"
+            className="nav-link nav-icon"
+            aria-label="Source code on GitHub"
+            title="GitHub"
+          >
+            <GitHubIcon />
+          </a>
           {me?.username ? (
             <>
               <NavLink to={`/${me.username}`} className="nav-link" end>
