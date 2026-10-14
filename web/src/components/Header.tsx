@@ -8,7 +8,8 @@ import { Logo } from "./Logo";
 /** Initials for the avatar: "Beto Figueiredo" → "BF". */
 function initials(name: string) {
   const parts = name.trim().split(/\s+/);
-  const letters = parts.length > 1 ? parts[0]![0]! + parts.at(-1)![0]! : name.slice(0, 2);
+  const letters =
+    parts.length > 1 ? parts[0]![0]! + parts.at(-1)![0]! : name.slice(0, 2);
   return letters.toUpperCase();
 }
 
@@ -25,6 +26,8 @@ export function Header({ children }: { children?: ReactNode }) {
             className="nav-link nav-icon"
             aria-label="Source code on GitHub"
             title="GitHub"
+            target="_blank"
+            rel="noopener"
           >
             <GitHubIcon />
           </a>
